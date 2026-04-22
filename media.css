@@ -1,0 +1,15 @@
+﻿@media (max-width:900px){
+  #stage{grid-template-columns:1fr;}
+  #left-panel{
+    border-right:none;
+    border-bottom:1px solid var(--border);
+    padding:24px 20px;
+  }
+  #right-panel{min-height:52vh;}
+  #pcb-wrap{max-width:620px;width:min(96%,620px);}
+  #usb-cable{width:min(64vw,360px);left:-72%;}
+  #pcb-wrap:hover #usb-cable{left:-10%;}
+  #pcb-wrap.connected #usb-cable{left:-62.5%;}
+  nav{padding:0 18px;}
+  .nav-links{display:none;}
+}

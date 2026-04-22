@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects | Harshil Suthar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="projects.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="portfolio.html">HS // Portfolio</a>
+    <nav class="topnav">
+      <a href="portfolio.html">Home</a>
+      <a class="active" href="projects.html">Projects</a>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <section class="hero">
+      <p class="kicker">Interactive Project Lab</p>
+      <h1>Explore My Work</h1>
+      <p class="sub">Filter by domain, search by keyword, and expand each card to view stack, highlights, and links.</p>
+    </section>
+
+    <section class="controls">
+      <input id="searchInput" type="text" placeholder="Search project, tech, keyword..." />
+      <div id="filterRow" class="filters"></div>
+    </section>
+
+    <section id="projectGrid" class="grid" aria-live="polite"></section>
+    <p id="emptyState" class="empty hidden">No projects matched your filter.</p>
+  </main>
+
+  <script src="projects-data.js"></script>
+  <script src="projects.js"></script>
+</body>
+</html>

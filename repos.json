@@ -1,0 +1,142 @@
+﻿[
+    {
+        "name":  "Motor-Website",
+        "language":  "JavaScript",
+        "description":  null,
+        "html_url":  "https://github.com/harris8099/Motor-Website",
+        "updated_at":  "2026-04-19T14:36:43Z"
+    },
+    {
+        "name":  "Motor_relay_server",
+        "language":  "JavaScript",
+        "description":  null,
+        "html_url":  "https://github.com/harris8099/Motor_relay_server",
+        "updated_at":  "2026-04-17T19:20:43Z"
+    },
+    {
+        "name":  "Embedded-C",
+        "language":  "C",
+        "description":  null,
+        "html_url":  "https://github.com/harris8099/Embedded-C",
+        "updated_at":  "2026-03-11T05:24:31Z"
+    },
+    {
+        "name":  "ESP-IDF",
+        "language":  "CMake",
+        "description":  null,
+        "html_url":  "https://github.com/harris8099/ESP-IDF",
+        "updated_at":  "2026-02-06T11:14:56Z"
+    },
+    {
+        "name":  "Kicad-projects",
+        "language":  "HTML",
+        "description":  null,
+        "html_url":  "https://github.com/harris8099/Kicad-projects",
+        "updated_at":  "2026-01-18T12:29:20Z"
+    },
+    {
+        "name":  "NTC_sensor",
+        "language":  "C++",
+        "description":  "use NTC sensor to calculate temp",
+        "html_url":  "https://github.com/harris8099/NTC_sensor",
+        "updated_at":  "2025-09-09T18:35:24Z"
+    },
+    {
+        "name":  "DC-DC-BuckConvertor",
+        "language":  "HTML",
+        "description":  "using LMR51450 make a buck convertor with input 12-36V and ouput 7.6V 4A",
+        "html_url":  "https://github.com/harris8099/DC-DC-BuckConvertor",
+        "updated_at":  "2025-09-09T17:54:39Z"
+    },
+    {
+        "name":  "WiLink",
+        "language":  "Python",
+        "description":  "automaton for sign in using selenium",
+        "html_url":  "https://github.com/harris8099/WiLink",
+        "updated_at":  "2025-01-03T00:03:58Z"
+    },
+    {
+        "name":  "Arduino-ESP32",
+        "language":  "Python",
+        "description":  null,
+        "html_url":  "https://github.com/harris8099/Arduino-ESP32",
+        "updated_at":  "2024-11-20T12:48:12Z"
+    },
+    {
+        "name":  "Portfolio-2.0",
+        "language":  "CSS",
+        "description":  null,
+        "html_url":  "https://github.com/harris8099/Portfolio-2.0",
+        "updated_at":  "2024-11-20T06:22:32Z"
+    },
+    {
+        "name":  "CTAE-MAP",
+        "language":  "HTML",
+        "description":  null,
+        "html_url":  "https://github.com/harris8099/CTAE-MAP",
+        "updated_at":  "2024-11-19T17:26:32Z"
+    },
+    {
+        "name":  "Type-Master",
+        "language":  "Python",
+        "description":  null,
+        "html_url":  "https://github.com/harris8099/Type-Master",
+        "updated_at":  "2024-11-19T17:14:58Z"
+    },
+    {
+        "name":  "Text-to-Morse-converter-",
+        "language":  "Python",
+        "description":  "Text to Morse converter, gui based using tkinter and python",
+        "html_url":  "https://github.com/harris8099/Text-to-Morse-converter-",
+        "updated_at":  "2024-11-19T17:11:03Z"
+    },
+    {
+        "name":  "Watermark",
+        "language":  "Python",
+        "description":  "watermark python app using tkinter",
+        "html_url":  "https://github.com/harris8099/Watermark",
+        "updated_at":  "2024-11-19T17:07:34Z"
+    },
+    {
+        "name":  "Portfolio",
+        "language":  "HTML",
+        "description":  null,
+        "html_url":  "https://github.com/harris8099/Portfolio",
+        "updated_at":  "2024-11-15T18:43:33Z"
+    },
+    {
+        "name":  "CODTECH-Task2",
+        "language":  "Verilog",
+        "description":  null,
+        "html_url":  "https://github.com/harris8099/CODTECH-Task2",
+        "updated_at":  "2024-06-25T19:59:28Z"
+    },
+    {
+        "name":  "CODTECH-Task1",
+        "language":  "Verilog",
+        "description":  null,
+        "html_url":  "https://github.com/harris8099/CODTECH-Task1",
+        "updated_at":  "2024-06-25T19:53:14Z"
+    },
+    {
+        "name":  "Dicee-roll",
+        "language":  "CSS",
+        "description":  "Roll the dice and settle at once",
+        "html_url":  "https://github.com/harris8099/Dicee-roll",
+        "updated_at":  "2024-06-15T19:52:35Z"
+    },
+    {
+        "name":  "80s-hit-game-Breakout",
+        "language":  "Python",
+        "description":  "This game is made on python using 🐢 ",
+        "html_url":  "https://github.com/harris8099/80s-hit-game-Breakout",
+        "updated_at":  "2024-06-15T05:31:41Z"
+    },
+    {
+        "name":  "Tic-Tac-Toe-command-line",
+        "language":  "Python",
+        "description":  "I have made a tic tac toe game using python in a command line base not GUI",
+        "html_url":  "https://github.com/harris8099/Tic-Tac-Toe-command-line",
+        "updated_at":  "2024-04-25T13:42:45Z"
+    }
+]

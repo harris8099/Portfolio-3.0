@@ -1,0 +1,935 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Harshil Suthar - Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a0b0d;
+  --bg2:#0f1114;
+  --bg3:#141619;
+  --border:#1c2028;
+  --border2:#252c38;
+  --cyan:#00e5ff;
+  --cyan2:rgba(0,229,255,.13);
+  --green:#39ff14;
+  --amber:#ffb300;
+  --red:#ff3232;
+  --board-red:#cc1a1a;
+  --text:#b8c4d4;
+  --dim:#3a4455;
+}
+
+html,body{height:100%;overflow:hidden;}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'JetBrains Mono',monospace;
+  display:flex;
+  flex-direction:column;
+}
+
+/* noise */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  opacity:.5;
+}
+
+/* ==================================
+   NAV
+================================== */
+nav{
+  position:relative;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:52px;flex-shrink:0;
+  background:rgba(10,11,13,.92);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(10px);
+}
+.nav-logo{
+  font-family:'Syne',sans-serif;font-size:12px;font-weight:800;
+  letter-spacing:.18em;color:var(--cyan);text-transform:uppercase;
+}
+.nav-links{display:flex;gap:28px;}
+.nav-links a{
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim);text-decoration:none;transition:color .2s;
+}
+.nav-links a:hover{color:var(--cyan);}
+.nav-dl{
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  padding:6px 16px;border:1px solid var(--border2);color:var(--dim);
+  background:none;cursor:pointer;border-radius:2px;transition:all .2s;
+  font-family:'JetBrains Mono',monospace;
+}
+.nav-dl:hover{border-color:var(--cyan);color:var(--cyan);}
+
+/* ==================================
+   MAIN STAGE  (fills remaining height)
+================================== */
+#stage{
+  flex:1;
+  display:grid;
+  grid-template-columns:minmax(240px,25%) minmax(0,75%);
+  grid-template-rows:1fr;
+  overflow:hidden;
+  position:relative;z-index:1;
+}
+
+/* -- LEFT PANEL: bio -- */
+#left-panel{
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:flex-start;
+  padding:40px 36px;
+  background:var(--bg2);
+  overflow-y:auto;
+  overflow-x:hidden;
+  min-height:0;
+  position:relative;
+}
+#left-panel::-webkit-scrollbar{width:4px;}
+#left-panel::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+#left-panel::-webkit-scrollbar-track{background:transparent;}
+#left-panel::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:24px 24px;opacity:.25;pointer-events:none;
+}
+.lp-label{
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:20px;
+  display:flex;align-items:center;gap:8px;
+}
+.lp-label::before{content:'';width:16px;height:1px;background:var(--cyan);}
+.lp-name{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(24px,2.8vw,38px);font-weight:800;
+  line-height:1.16;color:#fff;letter-spacing:-.01em;margin-bottom:12px;
+  overflow-wrap:anywhere;
+}
+.lp-name span{color:var(--cyan);}
+.lp-role{
+  font-size:10px;letter-spacing:.06em;color:var(--dim);
+  line-height:2.1;margin-bottom:28px;
+}
+.lp-role b{color:var(--text);font-weight:500;}
+.lp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:32px;}
+.tag{
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 10px;border:1px solid var(--border2);
+  border-radius:2px;color:var(--dim);background:var(--bg);
+  transition:all .2s;cursor:default;
+}
+.tag:hover{border-color:var(--cyan);color:var(--cyan);background:var(--cyan2);}
+.lp-hint{
+  font-size:9px;letter-spacing:.12em;color:var(--dim);
+  display:flex;align-items:center;gap:8px;margin-top:24px;
+}
+.lp-hint-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green);flex-shrink:0;
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
+
+/* -- RIGHT PANEL: board + terminal -- */
+#right-panel{
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  position:relative;
+}
+
+/* board area */
+#board-area{
+  flex:1;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  background:radial-gradient(circle at 50% 40%, #081018 0%, #05090d 65%);
+  overflow:hidden;
+  min-height:0;
+}
+/* subtle grid */
+#board-area::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(0,170,255,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,170,255,.08) 1px,transparent 1px);
+  background-size:40px 40px;
+  opacity:.38;
+}
+
+/* board container */
+#pcb-wrap{
+  position:relative;z-index:2;
+  cursor:pointer;
+  transition:filter .35s, transform .35s cubic-bezier(.22,1,.36,1);
+  transform-origin:center center;
+  max-width:608px;width:min(70.4%,608px);
+}
+#pcb-wrap:hover{
+  transform:translateY(-4px) scale(1.007);
+  filter:drop-shadow(0 0 28px rgba(255,0,0,.22)) drop-shadow(0 0 50px rgba(0,185,255,.14));
+}
+#pcb-wrap.connected{
+  transform:translateY(-2px) scale(1.008);
+  filter:drop-shadow(0 0 36px rgba(0,229,255,.22));
+}
+#pcb-wrap svg{width:100%;height:auto;display:block;}
+#pcb-svg{
+  position:relative;
+  z-index:4;
+}
+
+/* USB cable animate on hover */
+#usb-cable{
+  position:absolute;
+  width:min(52vw,440px);
+  left:-60%; top:50%;
+  transform:translateY(-50%);
+  transition:left .65s cubic-bezier(.22,1,.36,1), filter .3s, opacity .3s;
+  pointer-events:none;
+  z-index:2;
+  opacity:.96;
+}
+#pcb-wrap:hover #usb-cable{
+  left:-46%;
+}
+#pcb-wrap.connected #usb-cable{
+  left:-46%;
+  opacity:1;
+  filter:drop-shadow(0 0 5px rgba(0,229,255,.18));
+}
+#pcb-wrap:focus-visible{
+  outline:2px solid var(--cyan);
+  outline-offset:8px;
+}
+
+/* ripple */
+.ripple{
+  position:absolute;border-radius:50%;
+  border:1px solid var(--cyan);
+  pointer-events:none;z-index:5;
+  animation:ripOut .8s ease-out forwards;
+}
+@keyframes ripOut{
+  from{width:0;height:0;opacity:.9;transform:translate(-50%,-50%)}
+  to  {width:160px;height:160px;opacity:0;transform:translate(-50%,-50%)}
+}
+
+/* -- TERMINAL PANEL - slides up from bottom -- */
+#terminal-panel{
+  height:0;
+  overflow:hidden;
+  border-top:0px solid transparent;
+  transition:height .55s cubic-bezier(.22,1,.36,1),
+             border-top-color .3s;
+  flex-shrink:0;
+  display:flex;flex-direction:column;
+  background:#07090c;
+  position:relative;
+}
+#terminal-panel.open{
+  height:52%;
+  border-top:1px solid rgba(0,229,255,.2);
+}
+
+/* drag handle */
+#t-handle{
+  width:100%;height:34px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;
+  background:#0c0e12;
+  border-bottom:1px solid var(--border);
+  cursor:ns-resize;
+  flex-shrink:0;
+  user-select:none;
+}
+#t-controls{display:flex;align-items:center;gap:8px;}
+.t-btn{
+  border:none;
+  cursor:pointer;
+  font-family:'JetBrains Mono',monospace;
+  transition:transform .15s, filter .2s, background .2s, color .2s;
+}
+.t-btn:hover{transform:translateY(-1px);}
+.t-btn:active{transform:translateY(0);}
+#t-handle-label{
+  font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--dim);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  margin:0 12px;
+  flex:1;
+}
+#t-min-btn,#t-max-btn,#t-close-btn{
+  width:26px;height:22px;line-height:1;
+  border-radius:4px;
+  color:#c7d2e2;
+  background:#161b23;
+}
+#t-close-btn:hover{background:#7f1d1d;color:#ffd6d6;}
+
+#terminal-panel.os-macos #t-handle{
+  justify-content:flex-start;
+  gap:10px;
+  background:#111317;
+}
+#terminal-panel.os-macos #t-controls{order:1;gap:7px;}
+#terminal-panel.os-macos #t-handle-label{
+  order:2;
+  text-align:center;
+  font-size:9px;
+  letter-spacing:.12em;
+}
+#terminal-panel.os-macos .t-btn{
+  width:12px;height:12px;border-radius:50%;
+  padding:0;color:transparent;
+}
+#terminal-panel.os-macos #t-close-btn{background:#ff5f57;}
+#terminal-panel.os-macos #t-min-btn{background:#febc2e;}
+#terminal-panel.os-macos #t-max-btn{background:#28c840;}
+
+#terminal-panel.os-windows #t-handle{
+  background:#14171d;
+}
+#terminal-panel.os-windows #t-controls{order:2;gap:4px;}
+#terminal-panel.os-windows #t-handle-label{order:1;text-transform:none;letter-spacing:.03em;}
+#terminal-panel.os-windows .t-btn{
+  width:36px;height:24px;border-radius:2px;
+  background:transparent;
+}
+#terminal-panel.os-windows .t-btn:hover{background:#283040;}
+#terminal-panel.os-windows #t-close-btn:hover{background:#c42b1c;color:#fff;}
+
+#terminal-panel.os-linux #t-handle{
+  background:#1a1422;
+  border-bottom:1px solid #2e2340;
+}
+#terminal-panel.os-linux #t-controls{order:2;}
+#terminal-panel.os-linux #t-handle-label{
+  order:1;
+  color:#b7a3d5;
+  text-transform:none;
+}
+#terminal-panel.os-linux .t-btn{
+  width:24px;height:20px;border-radius:3px;
+  background:#2a2236;color:#d7c8ef;
+}
+
+/* scanlines */
+#terminal-panel::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(
+    0deg,transparent,transparent 2px,
+    rgba(0,0,0,.07) 2px,rgba(0,0,0,.07) 4px
+  );
+  z-index:10;
+}
+
+/* scrollable output */
+#t-body{
+  flex:1;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding:14px 20px 4px;
+  font-size:12px;line-height:1.85;
+  scroll-behavior:smooth;
+  /* allow user scroll freely */
+  overscroll-behavior:contain;
+}
+#t-body::-webkit-scrollbar{width:4px;}
+#t-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+#t-body::-webkit-scrollbar-track{background:transparent;}
+
+.tl{opacity:0;animation:tFade .18s forwards;}
+@keyframes tFade{to{opacity:1}}
+.tc{color:var(--cyan)}.tg{color:var(--green)}.ta{color:var(--amber)}
+.td{color:var(--dim)} .tw{color:#e8eef8}  .tr{color:var(--red)}
+
+/* input row */
+#t-input-row{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 20px 12px;
+  border-top:1px solid var(--border);
+  flex-shrink:0;
+}
+#t-prompt{color:var(--green);font-size:12px;white-space:nowrap;}
+#t-input{
+  background:none;border:none;outline:none;flex:1;
+  color:#fff;font-family:'JetBrains Mono',monospace;
+  font-size:12px;caret-color:var(--cyan);
+}
+.t-cursor{
+  display:inline-block;width:7px;height:13px;
+  background:var(--cyan);vertical-align:middle;
+  animation:blink 1s step-end infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* ==================================
+   OTHER SECTIONS (scrollable page below fold)
+================================== */
+#scroll-sections{
+  position:relative;z-index:1;
+  overflow-y:auto;
+  display:none; /* shown after terminal interaction */
+}
+</style>
+<link rel="stylesheet" href="media.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">HS // Portfolio</div>
+  <div class="nav-links">
+    <a href="portfolio.html">Home</a>
+    <a href="#about">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <button class="nav-dl">Download CV</button>
+</nav>
+
+<!-- STAGE -->
+<div id="stage">
+
+  <!-- LEFT: BIO -->
+  <div id="left-panel">
+    <div class="lp-label">System Online</div>
+    <h1 class="lp-name">HARSHIL<br/><span>SUTHAR</span></h1>
+    <div class="lp-role">
+      <b>Electronics Engineer</b><br/>
+      PCB &amp; Hardware Design<br/>
+      <b>Python Developer</b><br/>
+      Automation &amp; Data Systems
+    </div>
+    <div class="lp-tags">
+      <span class="tag">Python</span>
+      <span class="tag">ESP32</span>
+      <span class="tag">PCB Design</span>
+      <span class="tag">FreeRTOS</span>
+      <span class="tag">Flask</span>
+      <span class="tag">Django</span>
+      <span class="tag">KiCad</span>
+      <span class="tag">Pandas</span>
+    </div>
+    <div class="lp-hint">
+      <div class="lp-hint-dot"></div>
+      Hover to align cable, click to connect and boot
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div id="right-panel">
+
+    <!-- BOARD AREA -->
+    <div id="board-area">
+      <div id="pcb-wrap" role="button" tabindex="0" aria-label="Connect USB and boot terminal">
+
+        <!-- USB-C cable redraw based on real proportions -->
+        <svg id="usb-cable" width="560" height="124" viewBox="300 0 620 120" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <defs>
+            <linearGradient id="cableSkin" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#121417"></stop>
+              <stop offset="35%" stop-color="#4a4e54"></stop>
+              <stop offset="55%" stop-color="#5f636a"></stop>
+              <stop offset="100%" stop-color="#1a1d22"></stop>
+            </linearGradient>
+            <linearGradient id="plugHousing" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#4a4d53"></stop>
+              <stop offset="34%" stop-color="#23262c"></stop>
+              <stop offset="100%" stop-color="#171a1f"></stop>
+            </linearGradient>
+            <linearGradient id="plugMetal" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#d7d9dc"></stop>
+              <stop offset="35%" stop-color="#b2b6bc"></stop>
+              <stop offset="70%" stop-color="#8f949b"></stop>
+              <stop offset="100%" stop-color="#caced2"></stop>
+            </linearGradient>
+          </defs>
+
+          <path d="M0 60 C142 60 296 60 446 60" fill="none" stroke="#2a2d33" stroke-width="16" stroke-linecap="round"></path>
+          <path d="M0 60 C142 60 296 60 446 60" fill="none" stroke="#2a2d33" stroke-width="12" stroke-linecap="round"></path>
+          <path d="M0 60 C142 60 296 60 446 60" fill="none" stroke="#2a2d33" stroke-width="7" stroke-linecap="round"></path>
+
+          <rect x="442" y="50" width="44" height="20" rx="5" fill="#2a2d33" stroke="rgba(138,145,156,.22)" stroke-width="0.9"></rect>
+
+          <rect x="476" y="30" width="110" height="60" rx="9" fill="url(#plugHousing)" stroke="rgba(188,194,202,.2)" stroke-width="1.1"></rect>
+          <path d="M480 40 C512 36 550 38 582 46" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="0.9"></path>
+
+          <rect x="580" y="38" width="40" height="45" rx="4" fill="url(#plugMetal)" stroke="#717780" stroke-width="1"></rect>
+        </svg>
+
+        <!-- ESP32 board based on provided reference -->
+        <svg id="pcb-svg" width="600" height="240" viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg">
+          <!-- board -->
+          <rect x="20" y="20" width="560" height="200" rx="16" fill="#1f6d78" stroke="#4eb8c8" stroke-width="2"/>
+
+          <!-- Mount holes -->
+          <circle cx="30" cy="40" r="8" fill="#bbb"/>
+          <circle cx="570" cy="40" r="8" fill="#bbb"/>
+          <circle cx="30" cy="200" r="8" fill="#bbb"/>
+          <circle cx="570" cy="200" r="8" fill="#bbb"/>
+
+          <!-- USB-C (metal only) -->
+          <rect x="-10" y="90" width="80" height="60" rx="14" fill="#d0d0d0"/>
+
+          <!-- Buttons -->
+          <rect x="90" y="60" width="24" height="24" rx="6" fill="#888"/>
+          <rect x="90" y="140" width="24" height="24" rx="6" fill="#888"/>
+
+          <!-- Main IC -->
+          <rect x="180" y="90" width="60" height="50" rx="6" fill="#2b2b2b"/>
+
+          <!-- Components -->
+          <g fill="#caa">
+            <rect x="150" y="90" width="10" height="6"/>
+            <rect x="150" y="120" width="10" height="6"/>
+            <rect x="260" y="90" width="10" height="6"/>
+            <rect x="260" y="120" width="10" height="6"/>
+          </g>
+
+          <!-- LEDs kept for existing JS behavior -->
+          <g id="led-pwr"><rect x="278" y="104" width="12" height="10" rx="2" fill="#d91f1f" stroke="#8a1111"/></g>
+          <g id="led-io2"><rect id="led-io2-rect" x="296" y="104" width="12" height="10" rx="2" fill="#0f42c5" stroke="#0b2f87"/></g>
+          <g id="led-rx"><rect x="314" y="104" width="12" height="10" rx="2" fill="#14a34b" stroke="#0d6a31"/></g>
+          <g id="led-tx"><rect x="332" y="104" width="12" height="10" rx="2" fill="#b98711" stroke="#7f5d0e"/></g>
+
+          <!-- ESP32 Module -->
+          <rect x="400" y="60" width="200" height="120" rx="10" fill="#dcdcdc"/>
+
+          <!-- GOLD PADS around module -->
+          <g fill="#d4af37">
+            <!-- top -->
+            <rect x="410" y="60" width="8" height="5"/>
+            <rect x="425" y="60" width="8" height="5"/>
+            <rect x="440" y="60" width="8" height="5"/>
+            <rect x="455" y="60" width="8" height="5"/>
+            <rect x="470" y="60" width="8" height="5"/>
+            <rect x="485" y="60" width="8" height="5"/>
+            <rect x="500" y="60" width="8" height="5"/>
+            <rect x="515" y="60" width="8" height="5"/>
+            <rect x="530" y="60" width="8" height="5"/>
+            <rect x="545" y="60" width="8" height="5"/>
+            <rect x="560" y="60" width="8" height="5"/>
+
+            <!-- bottom -->
+            <rect x="410" y="175" width="8" height="5"/>
+            <rect x="425" y="175" width="8" height="5"/>
+            <rect x="440" y="175" width="8" height="5"/>
+            <rect x="455" y="175" width="8" height="5"/>
+            <rect x="470" y="175" width="8" height="5"/>
+            <rect x="485" y="175" width="8" height="5"/>
+            <rect x="500" y="175" width="8" height="5"/>
+            <rect x="515" y="175" width="8" height="5"/>
+            <rect x="530" y="175" width="8" height="5"/>
+            <rect x="545" y="175" width="8" height="5"/>
+            <rect x="560" y="175" width="8" height="5"/>
+          </g>
+
+          <!-- Antenna -->
+          <rect x="570" y="60" width="30" height="120" fill="#111"/>
+
+          <!-- SIDE HEADER PINS -->
+          <g fill="#d4af37">
+            <!-- top -->
+            <rect x="110" y="25" width="6" height="10"/>
+            <rect x="125" y="25" width="6" height="10"/>
+            <rect x="140" y="25" width="6" height="10"/>
+            <rect x="155" y="25" width="6" height="10"/>
+            <rect x="170" y="25" width="6" height="10"/>
+            <rect x="185" y="25" width="6" height="10"/>
+            <rect x="200" y="25" width="6" height="10"/>
+            <rect x="215" y="25" width="6" height="10"/>
+            <rect x="230" y="25" width="6" height="10"/>
+            <rect x="245" y="25" width="6" height="10"/>
+
+            <!-- bottom -->
+            <rect x="110" y="205" width="6" height="10"/>
+            <rect x="125" y="205" width="6" height="10"/>
+            <rect x="140" y="205" width="6" height="10"/>
+            <rect x="155" y="205" width="6" height="10"/>
+            <rect x="170" y="205" width="6" height="10"/>
+            <rect x="185" y="205" width="6" height="10"/>
+            <rect x="200" y="205" width="6" height="10"/>
+            <rect x="215" y="205" width="6" height="10"/>
+            <rect x="230" y="205" width="6" height="10"/>
+            <rect x="245" y="205" width="6" height="10"/>
+          </g>
+        </svg>
+      </div><!-- #pcb-wrap -->
+    </div><!-- #board-area -->
+
+    <!-- TERMINAL PANEL - slides up -->
+    <div id="terminal-panel">
+      <div id="t-handle">
+        <div id="t-controls">
+          <button class="t-btn" id="t-min-btn" type="button" aria-label="Minimize terminal">_</button>
+          <button class="t-btn" id="t-max-btn" type="button" aria-label="Maximize terminal">[]</button>
+          <button class="t-btn" id="t-close-btn" type="button" aria-label="Close terminal">x</button>
+        </div>
+        <div id="t-handle-label">harshil@esp32-devkit - serial monitor</div>
+      </div>
+      <div id="t-body"></div>
+      <div id="t-input-row">
+        <span id="t-prompt">harshil@esp32 ~$&nbsp;</span>
+        <input id="t-input" type="text" autocomplete="off" spellcheck="false" placeholder="type 'help'"/>
+        <span class="t-cursor"></span>
+      </div>
+    </div>
+
+  </div><!-- #right-panel -->
+</div><!-- #stage -->
+
+<script>
+/* ======================================
+   STATE
+====================================== */
+const pcbWrap  = document.getElementById('pcb-wrap');
+const ledIO2R  = document.getElementById('led-io2-rect');
+const ledPwr   = document.getElementById('led-pwr').querySelector('rect');
+const ledRx    = document.getElementById('led-rx').querySelector('rect');
+const ledTx    = document.getElementById('led-tx').querySelector('rect');
+const tPanel   = document.getElementById('terminal-panel');
+const tBody    = document.getElementById('t-body');
+const tInput   = document.getElementById('t-input');
+const tPrompt  = document.getElementById('t-prompt');
+const tLabel   = document.getElementById('t-handle-label');
+const minBtn   = document.getElementById('t-min-btn');
+const maxBtn   = document.getElementById('t-max-btn');
+const closeBtn = document.getElementById('t-close-btn');
+const rightPanel = document.getElementById('right-panel');
+const boardArea = document.getElementById('board-area');
+
+let triggered = false, booted = false, isMaximized = false, isMinimized = false, savedHeight = 0;
+
+function detectOS() {
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes('mac os') || ua.includes('macintosh')) return 'os-macos';
+  if (ua.includes('win')) return 'os-windows';
+  return 'os-linux';
+}
+
+const osClass = detectOS();
+tPanel.classList.add(osClass);
+
+const promptByOS = {
+  'os-macos': 'harshil@esp32 ~ % ',
+  'os-windows': 'C:\\Users\\harshil> ',
+  'os-linux': 'harshil@esp32:~$ ',
+};
+const titleByOS = {
+  'os-macos': 'harshil@esp32 - zsh',
+  'os-windows': 'Command Prompt - ESP32 Serial Monitor',
+  'os-linux': 'harshil@esp32:~ (bash)',
+};
+const shellNameByOS = {
+  'os-macos': 'zsh',
+  'os-windows': 'cmd',
+  'os-linux': 'bash',
+};
+
+tPrompt.innerHTML = `${promptByOS[osClass]}&nbsp;`;
+tLabel.textContent = titleByOS[osClass];
+
+/* ======================================
+   PWR LED - always on warm glow
+====================================== */
+ledPwr.style.filter = 'drop-shadow(0 0 4px #ff2200) drop-shadow(0 0 8px #cc0000)';
+
+/* ======================================
+   LED BLINK UTILITY
+====================================== */
+function blinkLED(el, onColor, glowColor, times, interval, cb) {
+  let count = 0;
+  const orig = el.getAttribute('fill');
+  const tick = () => {
+    const on = count % 2 === 0;
+    el.setAttribute('fill', on ? onColor : orig);
+    el.style.filter = on
+      ? `drop-shadow(0 0 6px ${glowColor}) drop-shadow(0 0 14px ${glowColor})`
+      : '';
+    count++;
+    if (count < times * 2) setTimeout(tick, interval);
+    else { el.setAttribute('fill', orig); el.style.filter = ''; if (cb) cb(); }
+  };
+  tick();
+}
+
+/* ======================================
+   TRIGGER BOOT
+====================================== */
+function triggerBoot() {
+  if (triggered) { openTerminal(); return; }
+  triggered = true;
+  pcbWrap.classList.add('connected');
+
+  // ripple from center of board
+  const ripple = document.createElement('div');
+  ripple.className = 'ripple';
+  ripple.style.cssText = 'left:50%;top:50%;';
+  boardArea.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 900);
+
+  // RX+TX flicker first
+  blinkLED(ledRx, '#22ff66', '#22ff66', 3, 80);
+  setTimeout(() => blinkLED(ledTx, '#ffcc00', '#ffcc00', 3, 80), 120);
+
+  // IO2 blink sequence - 7 times
+  setTimeout(() => {
+    blinkLED(ledIO2R, '#00e5ff', '#00e5ff', 7, 100, () => {
+      setTimeout(openTerminal, 150);
+    });
+  }, 300);
+}
+
+/* ======================================
+   OPEN TERMINAL
+====================================== */
+function openTerminal() {
+  isMinimized = false;
+  maxBtn.textContent = '[]';
+  tPanel.classList.add('open');
+  tPanel.style.removeProperty('height');
+  if (!booted) {
+    booted = true;
+    tBody.innerHTML = '';
+    runIntro();
+  } else {
+    setTimeout(() => tInput.focus(), 100);
+  }
+}
+
+function closeTerminal() {
+  isMinimized = false;
+  isMaximized = false;
+  maxBtn.textContent = '[]';
+  tPanel.style.removeProperty('height');
+  tPanel.classList.remove('open');
+  // brief blink on close
+  blinkLED(ledIO2R, '#00e5ff', '#00e5ff', 2, 150);
+}
+
+function minimizeTerminal() {
+  if (isMinimized) {
+    isMinimized = false;
+    tPanel.classList.add('open');
+    tPanel.style.height = `${savedHeight || Math.floor(rightPanel.offsetHeight * 0.52)}px`;
+    return;
+  }
+  if (!tPanel.classList.contains('open')) return;
+  savedHeight = tPanel.offsetHeight || savedHeight;
+  isMinimized = true;
+  isMaximized = false;
+  tPanel.classList.remove('open');
+  tPanel.style.height = '34px';
+}
+
+function maximizeTerminal() {
+  if (!tPanel.classList.contains('open')) openTerminal();
+  isMinimized = false;
+  if (!isMaximized) {
+    savedHeight = tPanel.offsetHeight || Math.floor(rightPanel.offsetHeight * 0.52);
+    const target = Math.max(220, rightPanel.offsetHeight - 28);
+    tPanel.style.height = `${target}px`;
+    isMaximized = true;
+    maxBtn.textContent = '[]';
+  } else {
+    tPanel.style.height = `${savedHeight || Math.floor(rightPanel.offsetHeight * 0.52)}px`;
+    isMaximized = false;
+    maxBtn.textContent = '[]';
+  }
+}
+
+closeBtn.addEventListener('click', closeTerminal);
+minBtn.addEventListener('click', minimizeTerminal);
+maxBtn.addEventListener('click', maximizeTerminal);
+
+/* ======================================
+   CLICK TRIGGER
+====================================== */
+pcbWrap.addEventListener('click', triggerBoot);
+pcbWrap.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    triggerBoot();
+  }
+});
+
+/* ======================================
+   SCROLL/INTERSECT TRIGGER
+====================================== */
+// disabled auto-trigger so interaction starts only on intentional user action
+
+/* ======================================
+   TERMINAL LINE HELPER
+====================================== */
+function addLine(cls, text, delay = 0) {
+  return new Promise(res => setTimeout(() => {
+    const d = document.createElement('div');
+    d.className = 'tl ' + cls;
+    d.textContent = text;
+    tBody.appendChild(d);
+    // only auto-scroll if user is near the bottom
+    const nearBottom = tBody.scrollHeight - tBody.scrollTop - tBody.clientHeight < 80;
+    if (nearBottom) tBody.scrollTop = tBody.scrollHeight;
+    res();
+  }, delay));
+}
+
+/* ======================================
+   BOOT INTRO SEQUENCE
+====================================== */
+const INTRO = [
+  [0,    'td', '>  ESP-IDF v5.2.1 booting...'],
+  [220,  'td', '   Chip: ESP32-D0WD-V3  (rev v3.1)'],
+  [400,  'td', '   CPU0: Xtensa LX6 @ 240 MHz'],
+  [560,  'td', '   CPU1: Xtensa LX6 @ 240 MHz'],
+  [720,  'td', '   Flash: 4 MB (QIO)   -   PSRAM: 8 MB'],
+  [880,  'td', '   CH340 USB-UART: connected @ 115200'],
+  [1020, 'td', '   GPIO2 (IO2 LED): blink test OK'],
+  [1160, 'td', '   WiFi : initialising...'],
+  [1300, 'tg', '   WiFi : INIT OK'],
+  [1440, 'td', '   BLE  : INIT OK'],
+  [1560, 'td', '----------------------------------------------'],
+  [1700, 'tc', '   > SYSTEM BOOT COMPLETE'],
+  [1840, 'td', '----------------------------------------------'],
+  [2000, 'tw', ''],
+  [2080, 'td', '   Scanning user identity...'],
+  [2320, 'tw', ''],
+  [2420, 'tc', '   NAME     :  Harshil Suthar'],
+  [2600, 'tg', '   ROLE     :  Electronics Engineer   -   Python Developer'],
+  [2820, 'tw', '   SKILLS   :  Python  -  ESP32  -  PCB Design  -  Django  -  Flask  -  FreeRTOS  -  KiCad'],
+  [3080, 'tw', '   FOCUS    :  Bridging hardware & software - sensor nodes to full-stack systems.'],
+  [3300, 'td', ''],
+  [3400, 'ta', '   TAGLINE  :  "I build things that run on electricity and logic."'],
+  [3640, 'td', ''],
+  [3720, 'td', '----------------------------------------------'],
+  [3860, 'tg', '   Ready. Type \'help\' for available commands.'],
+  [4000, 'td', '----------------------------------------------'],
+];
+
+function runIntro() {
+  INTRO.forEach(([t, c, s]) => addLine(c, s, t));
+  setTimeout(() => tInput.focus(), 4200);
+}
+
+/* ======================================
+   COMMANDS
+====================================== */
+const CMDS = {
+  help: () => [
+    ['tc', '   Commands:'],
+    ['tw', '     skills    - list all skills & tools'],
+    ['tw', '     projects  - recent projects'],
+    ['tw', '     contact   - get in touch'],
+    ['tw', '     status    - board system status'],
+    ['tw', '     clear     - clear terminal'],
+    ['tw', '     exit      - close terminal'],
+  ],
+  skills: () => [
+    ['tc', '   SKILLS:'],
+    ['tg', '     Languages  : Python  -  C  -  C++  -  JavaScript  -  HTML  -  CSS'],
+    ['tg', '     Frameworks : Django  -  Flask  -  FreeRTOS  -  ESP-IDF'],
+    ['tg', '     Hardware   : ESP32  -  STM32  -  ARM Cortex-M  -  KiCad  -  Altium'],
+    ['tg', '     Tools      : Git  -  Linux  -  Pandas  -  NumPy  -  MQTT  -  LoRaWAN'],
+  ],
+  projects: () => [
+    ['tc', '   PROJECTS:'],
+    ['tw', '     01  IoT Sensor Network     - ESP32 BLE mesh + MQTT + solar harvest'],
+    ['tw', '     02  Data Pipeline Dashboard - Django + Pandas + REST + live charts'],
+    ['tw', '     03  Custom PCB Controller   - STM32  -  CAN  -  KiCad 4-layer  -  DFM'],
+  ],
+  contact: () => [
+    ['tc', '   CONTACT:'],
+    ['tw', '     GitHub    : github.com/harris8099'],
+    ['tw', '     Portfolio : harris8099.github.io/Portfolio-2.0'],
+    ['ta', '     Open to   : freelance  -  collaboration  -  full-time roles'],
+  ],
+  status: () => {
+    const uptime = Math.floor(performance.now() / 1000);
+    return [
+      ['tc', '   BOARD STATUS:'],
+      ['tw', `     Uptime  : ${Math.floor(uptime/60)}m ${uptime%60}s`],
+      ['tw', '     CPU Freq: 240 MHz'],
+      ['tg', '     Temp    : 38.4 C'],
+      ['tw', '     Heap    : 285,420 bytes free'],
+      ['tg', '     WiFi    : CONNECTED  (-58 dBm)'],
+      ['tg', '     USB-C   : CONNECTED'],
+      ['tw', '     IO2 LED : ACTIVE'],
+    ];
+  },
+  clear: () => { tBody.innerHTML = ''; return []; },
+  exit:  () => { setTimeout(closeTerminal, 500); return [['tr', '   Disconnecting USB-C session...']]; },
+};
+
+tInput.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const cmd = tInput.value.trim().toLowerCase();
+  tInput.value = '';
+  if (!cmd) return;
+  const shellPrompt = promptByOS[osClass];
+  addLine('td', `   ${shellPrompt}${cmd}`);
+  const fn = CMDS[cmd];
+  if (fn) {
+    const lines = fn();
+    lines.forEach(([c, s], i) => addLine(c, s, i * 55));
+  } else {
+    addLine('tr', `   ${shellNameByOS[osClass]}: ${cmd}: command not found`);
+    addLine('td', `   Type 'help' to see available commands.`, 70);
+  }
+});
+
+/* ======================================
+   DRAG HANDLE - resize terminal panel
+====================================== */
+const handle = document.getElementById('t-handle');
+let dragging = false, startY = 0, startH = 0;
+
+handle.addEventListener('mousedown', e => {
+  if (e.target.closest('#t-controls')) return;
+  dragging = true;
+  startY = e.clientY;
+  startH = tPanel.offsetHeight;
+  document.body.style.userSelect = 'none';
+});
+document.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  const delta = startY - e.clientY;
+  const newH = Math.min(Math.max(startH + delta, 120), rightPanel.offsetHeight - 80);
+  tPanel.style.height = newH + 'px';
+  isMaximized = false;
+  isMinimized = false;
+});
+document.addEventListener('mouseup', () => {
+  dragging = false;
+  document.body.style.userSelect = '';
+});
+
+/* ======================================
+   IDLE LED PULSE (IO2 gentle pulse when connected)
+====================================== */
+let ledPhase = 0;
+setInterval(() => {
+  if (!booted) return;
+  ledPhase += 0.05;
+  const intensity = 0.5 + Math.sin(ledPhase) * 0.5;
+  const a = Math.round(intensity * 200);
+  ledIO2R.style.filter = intensity > 0.7
+    ? `drop-shadow(0 0 ${Math.round(intensity*8)}px rgba(0,229,255,${intensity.toFixed(2)}))`
+    : '';
+}, 50);
+</script>
+</body>
+</html>
+
