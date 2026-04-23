@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -212,6 +212,17 @@ nav{
   outline:2px solid var(--cyan);
   outline-offset:8px;
 }
+.pcb-btn {
+  transition: fill 0.1s, filter 0.1s;
+  cursor: pointer;
+}
+.pcb-btn:hover {
+  fill: #bbb;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4));
+}
+.pcb-btn:active {
+  fill: #555;
+}
 
 /* ripple */
 .ripple{
@@ -376,6 +387,15 @@ nav{
 }
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
+@keyframes pulseWaiting {
+  0% { filter: drop-shadow(0 0 2px #0f42c5); fill: #0f42c5; }
+  50% { filter: drop-shadow(0 0 12px #00e5ff); fill: #00e5ff; }
+  100% { filter: drop-shadow(0 0 2px #0f42c5); fill: #0f42c5; }
+}
+.waiting-led {
+  animation: pulseWaiting 2s infinite ease-in-out;
+}
+
 /* ==================================
    OTHER SECTIONS (scrollable page below fold)
 ================================== */
@@ -513,11 +533,53 @@ nav{
 .nav-links a.active{
   color:var(--cyan);
 }
+@keyframes glitch {
+  0% { transform: translate(0) }
+  20% { transform: translate(-2px, 2px) }
+  40% { transform: translate(-2px, -2px) }
+  60% { transform: translate(2px, 2px) }
+  80% { transform: translate(2px, -2px) }
+  100% { transform: translate(0) }
+}
+.glitch-effect {
+  animation: glitch 0.1s linear infinite;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.4) !important;
+  border-color: #ff5f56 !important;
+}
 @media (max-width: 900px){
   .about-grid,
   .contact-grid,
   .skill-matrix{
     grid-template-columns:1fr;
+  }
+  
+  .content-shell {
+    width: min(1120px, calc(100vw - 32px));
+    padding: 40px 0 60px;
+  }
+  
+  .section-block + .section-block {
+    margin-top: 48px;
+  }
+  
+  .section-title {
+    font-size: clamp(24px, 6vw, 36px);
+  }
+  
+  .lp-name {
+    font-size: clamp(28px, 6vw, 36px);
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-dl {
+    padding: 4px 10px;
+    font-size: 9px;
+  }
+  
+  .action-btn {
+    width: 100%;
+    text-align: center;
   }
 }
 </style>
@@ -532,7 +594,7 @@ nav{
     <a href="#top" data-section-link="top">Home</a>
     <a href="#about" data-section-link="about">About</a>
     <a href="projects.html">Projects</a>
-    <a href="#contact" data-section-link="contact">Contact</a>
+    <a href="contact.html">Contact</a>
   </div>
   <button class="nav-dl">Download CV</button>
 </nav>
@@ -553,14 +615,14 @@ nav{
       Automation &amp; Data Systems
     </div>
     <div class="lp-tags">
-      <span class="tag">Python</span>
-      <span class="tag">ESP32</span>
-      <span class="tag">PCB Design</span>
-      <span class="tag">FreeRTOS</span>
-      <span class="tag">Flask</span>
-      <span class="tag">Django</span>
-      <span class="tag">KiCad</span>
-      <span class="tag">Pandas</span>
+      <a href="projects.html?filter=Python" class="tag" style="text-decoration:none;">Python</a>
+      <a href="projects.html?filter=ESP32" class="tag" style="text-decoration:none;">ESP32</a>
+      <a href="projects.html?filter=PCB" class="tag" style="text-decoration:none;">PCB Design</a>
+      <a href="projects.html?filter=FreeRTOS" class="tag" style="text-decoration:none;">FreeRTOS</a>
+      <a href="projects.html?filter=Flask" class="tag" style="text-decoration:none;">Flask</a>
+      <a href="projects.html?filter=Django" class="tag" style="text-decoration:none;">Django</a>
+      <a href="projects.html?filter=KiCad" class="tag" style="text-decoration:none;">KiCad</a>
+      <a href="projects.html?filter=Pandas" class="tag" style="text-decoration:none;">Pandas</a>
     </div>
     <div class="lp-hint">
       <div class="lp-hint-dot"></div>
@@ -624,8 +686,8 @@ nav{
           <rect x="-10" y="90" width="80" height="60" rx="14" fill="#d0d0d0"/>
 
           <!-- Buttons -->
-          <rect x="90" y="60" width="24" height="24" rx="6" fill="#888"/>
-          <rect x="90" y="140" width="24" height="24" rx="6" fill="#888"/>
+          <rect id="btn-boot" class="pcb-btn" x="90" y="60" width="24" height="24" rx="6" fill="#888"/>
+          <rect id="btn-rst" class="pcb-btn" x="90" y="140" width="24" height="24" rx="6" fill="#888"/>
 
           <!-- Main IC -->
           <rect x="180" y="90" width="60" height="50" rx="6" fill="#2b2b2b"/>
@@ -640,7 +702,7 @@ nav{
 
           <!-- LEDs kept for existing JS behavior -->
           <g id="led-pwr"><rect x="278" y="104" width="12" height="10" rx="2" fill="#d91f1f" stroke="#8a1111"/></g>
-          <g id="led-io2"><rect id="led-io2-rect" x="296" y="104" width="12" height="10" rx="2" fill="#0f42c5" stroke="#0b2f87"/></g>
+          <g id="led-io2"><rect id="led-io2-rect" class="waiting-led" x="296" y="104" width="12" height="10" rx="2" fill="#0f42c5" stroke="#0b2f87"/></g>
           <g id="led-rx"><rect x="314" y="104" width="12" height="10" rx="2" fill="#14a34b" stroke="#0d6a31"/></g>
           <g id="led-tx"><rect x="332" y="104" width="12" height="10" rx="2" fill="#b98711" stroke="#7f5d0e"/></g>
 
@@ -780,38 +842,7 @@ nav{
       </div>
     </section>
 
-    <section class="section-block" id="contact">
-      <p class="section-kicker">Contact</p>
-      <h2 class="section-title">Let?s build something useful.</h2>
-      <p class="section-copy">
-        I?m open to freelance work, collaboration, and engineering roles involving embedded systems, Python development,
-        automation, or technical product building.
-      </p>
 
-      <div class="contact-grid">
-        <article class="info-card">
-          <h3>Reach Out</h3>
-          <ul>
-            <li>Email: <a href="mailto:harshilsuthar8099@gmail.com">harshilsuthar8099@gmail.com</a></li>
-            <li>GitHub: <a href="https://github.com/harris8099" target="_blank" rel="noreferrer">github.com/harris8099</a></li>
-            <li>Projects: <a href="projects.html">Browse project archive</a></li>
-          </ul>
-          <div class="contact-actions">
-            <a class="action-btn primary" href="mailto:harshilsuthar8099@gmail.com">Email Me</a>
-            <a class="action-btn" href="https://github.com/harris8099" target="_blank" rel="noreferrer">GitHub Profile</a>
-          </div>
-        </article>
-
-        <article class="info-card">
-          <h3>Best Fit</h3>
-          <ul>
-            <li>Embedded product development with ESP32, firmware, and board-level design.</li>
-            <li>Python automation, data tooling, dashboards, and API-driven utilities.</li>
-            <li>Cross-disciplinary builds where hardware and software need to work as one system.</li>
-          </ul>
-        </article>
-      </div>
-    </section>
   </div>
 </div>
 
@@ -836,7 +867,7 @@ const rightPanel = document.getElementById('right-panel');
 const boardArea = document.getElementById('board-area');
 const navDownloadBtn = document.querySelector('.nav-dl');
 const sectionLinks = Array.from(document.querySelectorAll('[data-section-link]'));
-const observedSections = ['top', 'about', 'contact']
+const observedSections = ['top', 'about']
   .map(id => document.getElementById(id))
   .filter(Boolean);
 
@@ -969,6 +1000,7 @@ function triggerBoot() {
   if (triggered) { openTerminal(); return; }
   triggered = true;
   pcbWrap.classList.add('connected');
+  ledIO2R.classList.remove('waiting-led');
 
   // ripple from center of board
   const ripple = document.createElement('div');
@@ -1133,6 +1165,7 @@ const CMDS = {
     ['tw', '     home      - jump to landing section'],
     ['tw', '     status    - board system status'],
     ['tw', '     clear     - clear terminal'],
+    ['tw', '     reboot    - restart system'],
     ['tw', '     exit      - close terminal'],
   ],
   about: () => {
@@ -1185,6 +1218,32 @@ const CMDS = {
   },
   clear: () => { tBody.innerHTML = ''; return []; },
   exit:  () => { setTimeout(closeTerminal, 500); return [['tr', '   Disconnecting USB-C session...']]; },
+  reboot: () => {
+    setTimeout(() => {
+      tBody.innerHTML = '';
+      runBootSequence();
+    }, 600);
+    return [['tr', '   [SYS] Triggering hardware reset...']];
+  },
+  sudo: () => {
+    tPanel.classList.add('glitch-effect');
+    setTimeout(() => tPanel.classList.remove('glitch-effect'), 800);
+    return [
+      ['tr', '   [!] ACCESS DENIED: ROOT PRIVILEGES LOCKED'],
+      ['tr', '   [!] UNAUTHORIZED ATTEMPT LOGGED']
+    ];
+  },
+  matrix: () => {
+    let count = 0;
+    const interval = setInterval(() => {
+      const chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%^&*';
+      let str = '   ';
+      for(let i=0; i<50; i++) str += chars[Math.floor(Math.random() * chars.length)];
+      addLine('tg', str);
+      if(++count > 20) clearInterval(interval);
+    }, 100);
+    return [['tg', '   [SYS] Waking up the construct...']];
+  }
 };
 
 tInput.addEventListener('keydown', e => {
@@ -1228,6 +1287,30 @@ document.addEventListener('mousemove', e => {
 document.addEventListener('mouseup', () => {
   dragging = false;
   document.body.style.userSelect = '';
+});
+
+/* ======================================
+   PCB BUTTONS INTERACTIVITY
+====================================== */
+document.getElementById('btn-boot').addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (booted) {
+    if (tPanel.offsetHeight === 0) tPanel.classList.add('open');
+    addLine('ta', '   [HW] BOOT button pressed. Entering download mode...');
+    setTimeout(() => addLine('td', '   Waiting for serial upload...'), 400);
+  }
+});
+
+document.getElementById('btn-rst').addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (booted) {
+    if (tPanel.offsetHeight === 0) tPanel.classList.add('open');
+    addLine('tr', '   [HW] EN button pressed. Hardware reset triggered...');
+    setTimeout(() => {
+      tBody.innerHTML = '';
+      runBootSequence();
+    }, 600);
+  }
 });
 
 /* ======================================

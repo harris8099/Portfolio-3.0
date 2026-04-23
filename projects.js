@@ -313,12 +313,36 @@
     `;
   }
 
+  function renderIframeInteraction(p) {
+    return `
+      <section class="project-machine browser-shell">
+        <div class="machine-topline">
+          <div>
+            <p class="machine-kicker">Live Demo</p>
+            <h4>${p.name} - Hosted on GitHub Pages</h4>
+          </div>
+        </div>
+        <div class="project-media" style="padding-top: 16px;">
+          <div class="media-stage" style="padding:0; border:none; border-top: 23px solid #1a1a1a; border-radius: 6px 6px 0 0; position:relative; overflow:hidden;">
+            <div style="position:absolute; top:-16px; left:12px; display:flex; gap:6px; z-index: 10;">
+              <span style="width:8px; height:8px; background:#ff5f56; border-radius:50%;"></span>
+              <span style="width:8px; height:8px; background:#ffbd2e; border-radius:50%;"></span>
+              <span style="width:8px; height:8px; background:#27c93f; border-radius:50%;"></span>
+            </div>
+            <iframe src="${p.interaction.url}" width="100%" height="100%" style="min-height: 500px; border: none; background: #fff; width: 100%; display: block;"></iframe>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
   function renderInteraction(p) {
     if (!p.interaction) return '';
     if (p.interaction.type === 'terminal-demo') return renderTerminalInteraction(p);
     if (p.interaction.type === 'pcb-explorer') return renderPcbInteraction(p);
     if (p.interaction.type === 'browser-preview') return renderBrowserInteraction(p);
     if (p.interaction.type === 'logic-sim') return renderLogicInteraction(p);
+    if (p.interaction.type === 'iframe-preview') return renderIframeInteraction(p);
     return renderMachineInteraction(p);
   }
 
@@ -326,19 +350,22 @@
     const stack = (project.stack || []).map((s) => `<span class="tag">${s}</span>`).join('');
     const highlights = (project.highlights || []).map((h) => `<li>${h}</li>`).join('');
     return `
-      <div class="spotlight-head">
-        <div>
-          <p class="section-kicker">Project Viewer</p>
-          <h2>${project.name}</h2>
-          <p class="spotlight-summary">${project.summary}</p>
+      <div class="spotlight-content">
+        <button type="button" class="btn-close-modal" aria-label="Close modal">&times;</button>
+        <div class="spotlight-head">
+          <div>
+            <p class="section-kicker">Project Viewer</p>
+            <h2>${project.name}</h2>
+            <p class="spotlight-summary">${project.summary}</p>
+          </div>
+          <div class="spotlight-actions">
+            <a href="${project.github}" target="_blank" rel="noreferrer">Open GitHub</a>
+          </div>
         </div>
-        <div class="spotlight-actions">
-          <a href="${project.github}" target="_blank" rel="noreferrer">Open GitHub</a>
-        </div>
+        <div class="tags spotlight-tags">${stack}</div>
+        ${renderInteraction(project)}
+        <ul class="spotlight-list">${highlights}</ul>
       </div>
-      <div class="tags spotlight-tags">${stack}</div>
-      ${renderInteraction(project)}
-      <ul class="spotlight-list">${highlights}</ul>
     `;
   }
 
@@ -409,18 +436,63 @@
     if (!project) {
       spotlightWrap.classList.add('hidden');
       spotlightWrap.innerHTML = '';
+      document.body.style.overflow = '';
       return;
     }
+    
+    document.body.style.overflow = 'hidden';
     spotlightWrap.classList.remove('hidden');
     spotlightWrap.classList.add('fade-transition', 'fade-hidden');
     
     setTimeout(() => {
       spotlightWrap.innerHTML = spotlightMarkup(project);
       bindSpotlightInteractions(spotlightWrap);
+      
+      const closeBtn = spotlightWrap.querySelector('.btn-close-modal');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeSpotlight);
+      }
+      
+      spotlightWrap.addEventListener('click', (e) => {
+        if (e.target === spotlightWrap) closeSpotlight();
+      });
+      
       spotlightWrap.classList.remove('fade-hidden');
       spotlightWrap.classList.add('fade-visible');
     }, 50);
   }
+
+  function closeSpotlight() {
+    selectedProjectName = null;
+    spotlightWrap.classList.remove('fade-visible');
+    spotlightWrap.classList.add('fade-hidden');
+    setTimeout(() => {
+      spotlightWrap.classList.add('hidden');
+      spotlightWrap.innerHTML = '';
+      document.body.style.overflow = '';
+      render();
+    }, 300);
+  }
+
+  const repoStats = {};
+  
+  async function fetchGitHubStats() {
+    try {
+      const res = await fetch('https://api.github.com/users/harris8099/repos');
+      if (!res.ok) return;
+      const repos = await res.json();
+      repos.forEach(r => {
+        repoStats[r.name] = {
+          stars: r.stargazers_count,
+          updated: new Date(r.updated_at).toLocaleDateString()
+        };
+      });
+      render();
+    } catch (e) {
+      console.error("GitHub API fetch failed", e);
+    }
+  }
+  fetchGitHubStats();
 
   function projectCard(project) {
     const stack = (project.stack || []).slice(0, 3).map((s) => `<span class="tag">${s}</span>`).join('');
@@ -430,13 +502,20 @@
       project.interaction?.type === 'pcb-explorer' ? 'Inspect Board' :
       project.interaction?.type === 'browser-preview' ? 'Open Preview' :
       project.interaction?.type === 'logic-sim' ? 'Test Logic' :
+      project.interaction?.type === 'iframe-preview' ? 'Live Demo' :
       'Explore Project';
+
+    const stats = repoStats[project.name];
+    const statsMarkup = stats ? `<span style="font-size:11px; opacity:0.8; color:var(--cyan);">⭐ ${stats.stars} &nbsp;|&nbsp; 📅 ${stats.updated}</span>` : '';
 
     return `
       <article class="project-teaser animate-in${project.name === selectedProjectName ? ' selected' : ''}" data-project-card="${project.name}">
         <div class="teaser-visual">${getProjectVisual(project)}</div>
         <div class="teaser-body">
-          <div class="teaser-meta">${project.domain} | ${project.year}</div>
+          <div class="teaser-meta" style="display:flex; justify-content:space-between;">
+            <span>${project.domain} | ${project.year}</span>
+            ${statsMarkup}
+          </div>
           <h3>${project.name}</h3>
           <p>${project.summary}</p>
           <div class="tags teaser-tags">${stack}</div>
@@ -517,23 +596,8 @@
         selectedProjectName = button.dataset.projectOpen;
         const selectedProject = projects.find((project) => project.name === selectedProjectName);
         
-        spotlightWrap.classList.remove('fade-visible');
-        spotlightWrap.classList.add('fade-hidden');
-        
-        setTimeout(() => {
-          renderSpotlight(selectedProject);
-          render();
-          
-          const offset = 80;
-          const bodyRect = document.body.getBoundingClientRect().top;
-          const elementRect = spotlightWrap.getBoundingClientRect().top;
-          const offsetPosition = (elementRect - bodyRect) - offset;
-          
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }, 150);
+        renderSpotlight(selectedProject);
+        render();
       });
     });
   }
@@ -553,6 +617,13 @@
     query = e.target.value || '';
     render();
   });
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const filterParam = urlParams.get('filter');
+  if (filterParam) {
+    query = filterParam;
+    searchInput.value = query;
+  }
 
   createFilters();
   render();

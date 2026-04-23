@@ -198,7 +198,6 @@ body::before {
   border-color: var(--cyan);
   color: #fff;
   background: rgba(0, 229, 255, 0.15);
-  box-shadow: 0 0 12px rgba(0, 229, 255, 0.15);
 }
 
 .grid {
@@ -341,9 +340,8 @@ body::before {
 
 .project-teaser:hover,
 .project-teaser.selected {
-  transform: translateY(-4px);
   border-color: rgba(0, 229, 255, 0.5);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 229, 255, 0.1);
+  background: linear-gradient(180deg, rgba(25, 28, 32, 0.96), rgba(15, 17, 20, 0.98));
 }
 
 .teaser-visual {
@@ -464,9 +462,8 @@ body::before {
 }
 
 .card:hover {
-  transform: translateY(-4px);
   border-color: rgba(0, 229, 255, 0.5);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 229, 255, 0.1);
+  background: linear-gradient(180deg, rgba(25, 28, 32, 0.96), rgba(15, 17, 20, 0.98));
 }
 
 .card-head,
@@ -625,7 +622,11 @@ body::before {
   text-align: right;
 }
 
-.machine-tabs {
+.machine-tabs,
+.terminal-tabs,
+.pcb-tabs,
+.browser-tabs,
+.logic-tabs {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -714,7 +715,11 @@ body::before {
   max-height: 360px;
 }
 
-.machine-tab {
+.machine-tab,
+.terminal-tab,
+.pcb-tab,
+.browser-tab,
+.logic-tab {
   padding: 7px 11px;
   border: 1px solid var(--border2);
   background: #0a0b0d;
@@ -728,7 +733,15 @@ body::before {
 }
 
 .machine-tab.active,
-.machine-tab:hover {
+.machine-tab:hover,
+.terminal-tab.active,
+.terminal-tab:hover,
+.pcb-tab.active,
+.pcb-tab:hover,
+.browser-tab.active,
+.browser-tab:hover,
+.logic-tab.active,
+.logic-tab:hover {
   color: var(--cyan);
   border-color: var(--cyan);
   background: var(--cyan2);
@@ -1243,4 +1256,180 @@ body::before {
   .grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ==================================
+   MOBILE RESPONSIVENESS
+================================== */
+@media (max-width: 900px) {
+  .grid,
+  .teaser-grid,
+  .featured-shell {
+    grid-template-columns: 1fr;
+  }
+  
+  .layout {
+    width: 100%;
+    margin-top: 0;
+    padding: 20px;
+  }
+  
+  .site-nav {
+    padding: 12px 20px;
+    height: auto;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    gap: 16px;
+  }
+  
+  .project-teaser {
+    grid-template-columns: 1fr;
+  }
+  
+  .teaser-visual {
+    min-height: 180px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .machine-topline {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .machine-metrics {
+    margin-top: 10px;
+  }
+  
+  .machine-tabs,
+  .terminal-tabs,
+  .pcb-tabs,
+  .browser-tabs,
+  .logic-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .machine-tabs::-webkit-scrollbar,
+  .terminal-tabs::-webkit-scrollbar,
+  .pcb-tabs::-webkit-scrollbar,
+  .browser-tabs::-webkit-scrollbar,
+  .logic-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .machine-tab,
+  .terminal-tab,
+  .pcb-tab,
+  .browser-tab,
+  .logic-tab {
+    flex-shrink: 0;
+  }
+  
+  .media-gallery {
+    grid-template-columns: 1fr;
+  }
+  
+  .hero {
+    padding: 20px;
+  }
+  
+  .hero h1 {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-dl {
+    padding: 4px 10px;
+    font-size: 9px;
+  }
+  
+  .hero h1 {
+    font-size: 26px;
+  }
+  
+  .spotlight-head {
+    flex-direction: column;
+  }
+  
+  .featured-actions a,
+  .spotlight-actions a,
+  .feature-btn,
+  .teaser-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ==================================
+   PROJECT MODAL OVERLAY
+================================== */
+.project-spotlight {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px !important;
+  margin-top: 0 !important;
+  border: none !important;
+}
+
+.project-spotlight.hidden {
+  display: none !important;
+}
+
+.project-spotlight .spotlight-content {
+  width: min(1000px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--cyan);
+  background: linear-gradient(180deg, rgba(15, 17, 20, 0.98), rgba(10, 11, 13, 0.98));
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 229, 255, 0.15);
+}
+
+.project-spotlight .spotlight-content::-webkit-scrollbar {
+  width: 6px;
+}
+.project-spotlight .spotlight-content::-webkit-scrollbar-thumb {
+  background: var(--border2);
+  border-radius: 3px;
+}
+
+.btn-close-modal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border2);
+  background: #0a0b0d;
+  color: var(--text);
+  font-size: 16px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s;
+}
+
+.btn-close-modal:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: var(--cyan2);
 }

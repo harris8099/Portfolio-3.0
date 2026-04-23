@@ -131,35 +131,8 @@ window.GITHUB_REPOS = [
       stack: ["JavaScript", "HTML", "CSS", "Control"],
       summary: "Web interface project for motor control workflows and hardware-facing interaction.",
       interaction: {
-        type: "terminal-demo",
-        title: "Motor Control Flow",
-        subtitle: "Interactive terminal showing the motor initialization sequence.",
-        metrics: [
-          ["Component", "Web UI"],
-          ["Target", "Hardware Control"]
-        ],
-        commands: [
-          {
-            key: "init",
-            label: "Init",
-            command: "npm run start:motor",
-            output: [
-              "[sys] connecting to motor driver...",
-              "[sys] establishing websocket link...",
-              "[ok] motor ready for commands"
-            ]
-          },
-          {
-            key: "spin",
-            label: "Spin",
-            command: "motor set --speed 2000 --dir cw",
-            output: [
-              "[cmd] transmitting speed=2000, dir=cw",
-              "[status] ramp up initiated",
-              "[ok] cruising speed reached"
-            ]
-          }
-        ]
+        type: "iframe-preview",
+        url: "https://harris8099.github.io/Motor-Website/"
       }
     },
     "Kicad-projects": {
@@ -280,37 +253,8 @@ window.GITHUB_REPOS = [
         "Focused on presentation quality, personality, and stronger user engagement.",
       ],
       interaction: {
-        type: "browser-preview",
-        title: "Website Preview",
-        subtitle: "Walk through key screens of the portfolio like a miniature product demo.",
-        metrics: [
-          ["Format", "Portfolio website"],
-          ["Focus", "Interactive presentation"],
-          ["Goal", "Show projects with personality"],
-        ],
-        screens: [
-          {
-            key: "home",
-            label: "Home",
-            title: "Landing Experience",
-            text: "The home screen introduces the hardware-inspired visual identity and creates a memorable entry instead of a basic portfolio hero section.",
-            image: "assets/portfolio-2.0/portfolio.png",
-          },
-          {
-            key: "projects",
-            label: "Projects",
-            title: "Project Archive",
-            text: "Project browsing is treated as an experience, with filtering, hierarchy, and richer interaction patterns rather than static project cards.",
-            image: "assets/portfolio-2.0/ctae-map.png",
-          },
-          {
-            key: "profile",
-            label: "Profile",
-            title: "Personal Layer",
-            text: "Profile and about sections create context around the work so the site feels like a complete engineering portfolio rather than just a gallery.",
-            image: "assets/portfolio-2.0/profile2.jpg",
-          },
-        ],
+        type: "iframe-preview",
+        url: "https://harris8099.github.io/Portfolio-2.0/"
       },
     },
     Tifan: {
@@ -392,37 +336,8 @@ window.GITHUB_REPOS = [
         "Uses image-backed navigation to make the map feel more discoverable and practical.",
       ],
       interaction: {
-        type: "browser-preview",
-        title: "Campus Map Preview",
-        subtitle: "Explore the CTAE map through landmark-driven preview screens.",
-        metrics: [
-          ["Format", "Campus interface"],
-          ["Focus", "Navigation and landmarks"],
-          ["Audience", "Students and visitors"],
-        ],
-        screens: [
-          {
-            key: "main",
-            label: "Main",
-            title: "Main Building View",
-            text: "The map starts with a broad campus anchor so users can orient themselves before jumping into specific departments or spaces.",
-            image: "assets/ctae-map/main-building.png",
-          },
-          {
-            key: "admin",
-            label: "Admin",
-            title: "Administrative Zone",
-            text: "Administrative points are separated clearly so the experience remains useful for first-time visitors trying to navigate campus services.",
-            image: "assets/ctae-map/admin.png",
-          },
-          {
-            key: "spots",
-            label: "Spots",
-            title: "Campus Spots",
-            text: "Important places like canteen and shared campus areas add practical value beyond department-only navigation.",
-            image: "assets/ctae-map/canteen.jpeg",
-          },
-        ],
+        type: "iframe-preview",
+        url: "https://harris8099.github.io/CTAE-MAP/"
       },
     },
     "Type-Master": {
@@ -551,25 +466,8 @@ window.GITHUB_REPOS = [
       domain: "Web App",
       stack: ["HTML", "CSS"],
       interaction: {
-        type: "terminal-demo",
-        title: "Portfolio Boot Sequence",
-        subtitle: "A text-based simulation of compiling the first portfolio.",
-        metrics: [
-          ["Version", "1.0"],
-          ["Build", "Static HTML"]
-        ],
-        commands: [
-          {
-            key: "build",
-            label: "Build",
-            command: "npm run build",
-            output: [
-              "Parsing HTML templates...",
-              "Compiling CSS assets...",
-              "Portfolio successfully built."
-            ]
-          }
-        ]
+        type: "iframe-preview",
+        url: "https://harris8099.github.io/Portfolio/"
       }
     },
     "CODTECH-Task2": {
@@ -618,17 +516,8 @@ window.GITHUB_REPOS = [
       domain: "Python Games",
       stack: ["HTML", "CSS", "Game UI"],
       interaction: {
-        type: "logic-sim",
-        title: "Dice Logic",
-        subtitle: "Preview the random number generation logic for the dice.",
-        metrics: [
-          ["Core", "Math.random()"],
-          ["Output", "Integer 1-6"]
-        ],
-        states: [
-          { key: "roll1", label: "Roll 1", output: "Dice = 4", note: "Random seed generates mid-range value." },
-          { key: "roll2", label: "Roll 2", output: "Dice = 6", note: "Critical hit, max value generated." }
-        ]
+        type: "iframe-preview",
+        url: "https://harris8099.github.io/Dicee-roll/"
       }
     },
     "80s-hit-game-Breakout": {

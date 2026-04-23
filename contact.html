@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Harshil Suthar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="projects.css">
+  <link rel="stylesheet" href="media.css">
+  <style>
+    .layout { max-width: 900px; margin: 40px auto; padding: 20px; }
+    .hero { margin-bottom: 40px; }
+    
+    .contact-terminal {
+      background: linear-gradient(180deg, #15181c, #0a0b0d);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .t-head {
+      background: #1a1d24;
+      border-bottom: 1px solid var(--border2);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--dim);
+    }
+
+    .t-dots span {
+      display: inline-block;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #ff5f56;
+      margin-right: 6px;
+    }
+    .t-dots span:nth-child(2) { background: #ffbd2e; }
+    .t-dots span:nth-child(3) { background: #27c93f; margin-right: 16px; }
+
+    .t-body {
+      padding: 24px;
+      flex-grow: 1;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    .t-line {
+      margin-bottom: 12px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .t-prompt {
+      color: var(--cyan);
+      margin-right: 12px;
+      white-space: nowrap;
+    }
+
+    .t-input-group {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      margin-bottom: 16px;
+      min-width: 200px;
+    }
+
+    .t-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px dashed var(--border2);
+      color: #fff;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 14px;
+      padding: 4px 0;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+    
+    .t-input:focus {
+      border-bottom-color: var(--cyan);
+    }
+
+    textarea.t-input {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .t-btn {
+      background: var(--cyan);
+      color: #001217;
+      border: none;
+      padding: 8px 16px;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      text-transform: uppercase;
+      margin-top: 10px;
+      align-self: flex-start;
+      transition: all 0.2s;
+    }
+
+    .t-btn:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+    }
+    
+    .status-msg {
+      margin-top: 16px;
+      font-size: 12px;
+    }
+    .status-msg.success { color: var(--green); }
+    .status-msg.error { color: #ff5f56; }
+    
+    .contact-links {
+      margin-top: 40px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .contact-links a {
+      color: var(--cyan);
+      text-decoration: none;
+      border: 1px solid var(--border2);
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .contact-links a:hover {
+      border-color: var(--cyan);
+      background: var(--cyan2);
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-logo">HS // Portfolio</div>
+    <div class="nav-links">
+      <a href="portfolio.html">Home</a>
+      <a href="portfolio.html#about">About</a>
+      <a href="projects.html">Projects</a>
+      <a class="active" href="contact.html">Contact</a>
+    </div>
+    <button class="nav-dl" type="button">Download CV</button>
+  </nav>
+
+  <main class="layout">
+    <section class="hero">
+      <p class="kicker">Communication Protocol</p>
+      <h1>Let's Connect</h1>
+      <p class="sub">Use the terminal below to send a direct transmission to my inbox. I am open to freelance work, collaboration, and engineering roles.</p>
+    </section>
+
+    <div class="contact-terminal">
+      <div class="t-head">
+        <div class="t-dots"><span></span><span></span><span></span></div>
+        <div>harshil@contact-relay ~ bash</div>
+      </div>
+      <div class="t-body">
+        <div class="t-line">
+          <span class="t-prompt">server$</span>
+          <span>Initializing secure mail transport... OK</span>
+        </div>
+        <div class="t-line">
+          <span class="t-prompt">server$</span>
+          <span>Awaiting user input for message parameters.</span>
+        </div>
+        
+        <!-- Replace YOUR_FORMSPREE_ID with your actual Formspree form ID -->
+        <form id="terminal-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+          <div class="t-line">
+            <span class="t-prompt">user@set-name:~$</span>
+            <div class="t-input-group">
+              <input class="t-input" type="text" name="name" placeholder="Enter your name" required autocomplete="off" spellcheck="false" />
+            </div>
+          </div>
+          
+          <div class="t-line">
+            <span class="t-prompt">user@set-email:~$</span>
+            <div class="t-input-group">
+              <input class="t-input" type="email" name="_replyto" placeholder="Enter your email" required autocomplete="off" spellcheck="false" />
+            </div>
+          </div>
+          
+          <div class="t-line">
+            <span class="t-prompt">user@set-body:~$</span>
+            <div class="t-input-group">
+              <textarea class="t-input" name="message" placeholder="Type your message here..." required spellcheck="false"></textarea>
+            </div>
+          </div>
+
+          <div class="t-line">
+            <span class="t-prompt">user@action:~$</span>
+            <div style="display: flex; flex-direction: column;">
+              <button class="t-btn" type="submit">./send_message.sh</button>
+              <div id="form-status" class="status-msg"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <div class="contact-links">
+      <a href="mailto:harshilsuthar8099@gmail.com">harshilsuthar8099@gmail.com</a>
+      <a href="https://github.com/harris8099" target="_blank" rel="noreferrer">GitHub Profile</a>
+    </div>
+  </main>
+
+  <script>
+    document.querySelector('.nav-dl')?.addEventListener('click', () => {
+      const cvText = [
+        'HARSHIL SUTHAR',
+        'Electronics Engineer | Python Developer',
+        '',
+        'Focus Areas',
+        '- PCB and hardware design',
+        '- ESP32 and embedded systems',
+        '- Python automation and data workflows',
+        '- Flask and Django web applications',
+        '',
+        'Core Skills',
+        '- Python, C, C++, JavaScript, HTML, CSS',
+        '- ESP-IDF, FreeRTOS, KiCad, Pandas, NumPy',
+        '- Git, Linux, MQTT, LoRaWAN',
+        '',
+        'Links',
+        '- GitHub: https://github.com/harris8099',
+        '- Portfolio: https://github.com/harris8099/Portfolio-2.0',
+        '- Email: harshilsuthar8099@gmail.com',
+      ].join('\n');
+
+      const blob = new Blob([cvText], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = 'Harshil-Suthar-CV.txt';
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+
+    const form = document.getElementById("terminal-form");
+    const status = document.getElementById("form-status");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      status.className = 'status-msg';
+      status.textContent = '[sys] Transmitting packets...';
+      
+      try {
+        const res = await fetch(form.action, {
+          method: form.method,
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          status.textContent = '[ok] Transmission successful. I will respond shortly.';
+          status.classList.add('success');
+          form.reset();
+        } else {
+          status.textContent = '[error] Transmission failed. Check your Formspree setup or network link.';
+          status.classList.add('error');
+        }
+      } catch (err) {
+        status.textContent = '[error] Protocol failure. Endpoint unreachable.';
+        status.classList.add('error');
+      }
+    });
+  </script>
+</body>
+</html>
