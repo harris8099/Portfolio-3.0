@@ -130,6 +130,37 @@ window.GITHUB_REPOS = [
       domain: "Embedded & Hardware",
       stack: ["JavaScript", "HTML", "CSS", "Control"],
       summary: "Web interface project for motor control workflows and hardware-facing interaction.",
+      interaction: {
+        type: "terminal-demo",
+        title: "Motor Control Flow",
+        subtitle: "Interactive terminal showing the motor initialization sequence.",
+        metrics: [
+          ["Component", "Web UI"],
+          ["Target", "Hardware Control"]
+        ],
+        commands: [
+          {
+            key: "init",
+            label: "Init",
+            command: "npm run start:motor",
+            output: [
+              "[sys] connecting to motor driver...",
+              "[sys] establishing websocket link...",
+              "[ok] motor ready for commands"
+            ]
+          },
+          {
+            key: "spin",
+            label: "Spin",
+            command: "motor set --speed 2000 --dir cw",
+            output: [
+              "[cmd] transmitting speed=2000, dir=cw",
+              "[status] ramp up initiated",
+              "[ok] cruising speed reached"
+            ]
+          }
+        ]
+      }
     },
     "Kicad-projects": {
       domain: "Embedded & Hardware",
@@ -519,6 +550,27 @@ window.GITHUB_REPOS = [
     Portfolio: {
       domain: "Web App",
       stack: ["HTML", "CSS"],
+      interaction: {
+        type: "terminal-demo",
+        title: "Portfolio Boot Sequence",
+        subtitle: "A text-based simulation of compiling the first portfolio.",
+        metrics: [
+          ["Version", "1.0"],
+          ["Build", "Static HTML"]
+        ],
+        commands: [
+          {
+            key: "build",
+            label: "Build",
+            command: "npm run build",
+            output: [
+              "Parsing HTML templates...",
+              "Compiling CSS assets...",
+              "Portfolio successfully built."
+            ]
+          }
+        ]
+      }
     },
     "CODTECH-Task2": {
       domain: "Digital Design",
@@ -565,14 +617,89 @@ window.GITHUB_REPOS = [
     "Dicee-roll": {
       domain: "Python Games",
       stack: ["HTML", "CSS", "Game UI"],
+      interaction: {
+        type: "logic-sim",
+        title: "Dice Logic",
+        subtitle: "Preview the random number generation logic for the dice.",
+        metrics: [
+          ["Core", "Math.random()"],
+          ["Output", "Integer 1-6"]
+        ],
+        states: [
+          { key: "roll1", label: "Roll 1", output: "Dice = 4", note: "Random seed generates mid-range value." },
+          { key: "roll2", label: "Roll 2", output: "Dice = 6", note: "Critical hit, max value generated." }
+        ]
+      }
     },
     "80s-hit-game-Breakout": {
       domain: "Python Games",
       stack: ["Python", "Turtle", "Game Dev"],
+      interaction: {
+        type: "terminal-demo",
+        title: "Game Engine Console",
+        subtitle: "Terminal view of the game state and object interactions.",
+        metrics: [
+          ["Engine", "Turtle Graphics"],
+          ["Type", "Arcade"]
+        ],
+        commands: [
+          {
+            key: "start",
+            label: "Start",
+            command: "python breakout.py",
+            output: [
+              "[engine] initializing screen...",
+              "[engine] drawing paddle and bricks...",
+              "[game] ready, waiting for player input"
+            ]
+          },
+          {
+            key: "play",
+            label: "Play",
+            command: "simulate_tick()",
+            output: [
+              "[event] ball collided with paddle",
+              "[event] ball hit brick #42 (destroyed)",
+              "[score] +10 points"
+            ]
+          }
+        ]
+      }
     },
     "Tic-Tac-Toe-command-line": {
       domain: "Python Games",
       stack: ["Python", "CLI", "Game Logic"],
+      interaction: {
+        type: "terminal-demo",
+        title: "CLI Match",
+        subtitle: "Step through a command-line tic-tac-toe match.",
+        metrics: [
+          ["Interface", "Terminal"],
+          ["Mode", "PvP or PvE"]
+        ],
+        commands: [
+          {
+            key: "turn1",
+            label: "Turn 1",
+            command: "Player X > center",
+            output: [
+              ". . .",
+              ". X .",
+              ". . ."
+            ]
+          },
+          {
+            key: "turn2",
+            label: "Turn 2",
+            command: "Player O > top-left",
+            output: [
+              "O . .",
+              ". X .",
+              ". . ."
+            ]
+          }
+        ]
+      }
     },
   };
 

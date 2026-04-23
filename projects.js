@@ -9,7 +9,7 @@
 
   let activeDomain = 'All';
   let query = '';
-  let selectedProjectName = 'Tifan';
+  let selectedProjectName = null;
 
   const domainOrder = [
     'Embedded & Hardware',
@@ -412,8 +412,14 @@
       return;
     }
     spotlightWrap.classList.remove('hidden');
-    spotlightWrap.innerHTML = spotlightMarkup(project);
-    bindSpotlightInteractions(spotlightWrap);
+    spotlightWrap.classList.add('fade-transition', 'fade-hidden');
+    
+    setTimeout(() => {
+      spotlightWrap.innerHTML = spotlightMarkup(project);
+      bindSpotlightInteractions(spotlightWrap);
+      spotlightWrap.classList.remove('fade-hidden');
+      spotlightWrap.classList.add('fade-visible');
+    }, 50);
   }
 
   function projectCard(project) {
@@ -427,7 +433,7 @@
       'Explore Project';
 
     return `
-      <article class="project-teaser${project.name === selectedProjectName ? ' selected' : ''}" data-project-card="${project.name}">
+      <article class="project-teaser animate-in${project.name === selectedProjectName ? ' selected' : ''}" data-project-card="${project.name}">
         <div class="teaser-visual">${getProjectVisual(project)}</div>
         <div class="teaser-body">
           <div class="teaser-meta">${project.domain} | ${project.year}</div>
@@ -449,7 +455,7 @@
       return;
     }
     featuredWrap.innerHTML = `
-      <div class="featured-shell">
+      <div class="featured-shell animate-in">
         <div class="featured-copy">
           <p class="section-kicker">Featured Project</p>
           <h2>${project.name}</h2>
@@ -486,7 +492,7 @@
       const section = document.createElement('section');
       section.className = 'domain-section';
       section.innerHTML = `
-        <div class="domain-head">
+        <div class="domain-head animate-in">
           <p class="section-kicker">${domain}</p>
           <h2>${domain}</h2>
         </div>
@@ -497,6 +503,11 @@
       sectionsWrap.appendChild(section);
     });
 
+    const animatedEls = sectionsWrap.querySelectorAll('.animate-in');
+    animatedEls.forEach((el, i) => {
+      el.style.animationDelay = `${i * 0.05}s`;
+    });
+
     emptyState.classList.toggle('hidden', hasCards || filtered.some((project) => project.name === 'Tifan'));
   }
 
@@ -505,9 +516,24 @@
       button.addEventListener('click', () => {
         selectedProjectName = button.dataset.projectOpen;
         const selectedProject = projects.find((project) => project.name === selectedProjectName);
-        renderSpotlight(selectedProject);
-        render();
-        spotlightWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        spotlightWrap.classList.remove('fade-visible');
+        spotlightWrap.classList.add('fade-hidden');
+        
+        setTimeout(() => {
+          renderSpotlight(selectedProject);
+          render();
+          
+          const offset = 80;
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = spotlightWrap.getBoundingClientRect().top;
+          const offsetPosition = (elementRect - bodyRect) - offset;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }, 150);
       });
     });
   }
@@ -515,7 +541,7 @@
   function render() {
     const filtered = projects.filter(matches);
     const featured = filtered.find((project) => project.name === 'Tifan') || filtered[0] || null;
-    const selected = filtered.find((project) => project.name === selectedProjectName) || featured;
+    const selected = selectedProjectName ? filtered.find((project) => project.name === selectedProjectName) : null;
 
     renderFeatured(featured);
     renderSpotlight(selected);

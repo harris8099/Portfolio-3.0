@@ -180,8 +180,9 @@ body::before {
 }
 
 .filter-btn {
-  padding: 7px 12px;
+  padding: 8px 16px;
   border: 1px solid var(--border2);
+  border-radius: 20px;
   background: #0a0b0d;
   color: var(--dim);
   font-family: inherit;
@@ -189,14 +190,15 @@ body::before {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .filter-btn:hover,
 .filter-btn.active {
   border-color: var(--cyan);
-  color: var(--cyan);
-  background: var(--cyan2);
+  color: #fff;
+  background: rgba(0, 229, 255, 0.15);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.15);
 }
 
 .grid {
@@ -334,14 +336,14 @@ body::before {
   border: 1px solid var(--border);
   background: linear-gradient(180deg, rgba(20, 22, 25, 0.96), rgba(10, 12, 15, 0.98));
   overflow: hidden;
-  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .project-teaser:hover,
 .project-teaser.selected {
-  transform: translateY(-3px);
-  border-color: rgba(0, 229, 255, 0.35);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.24);
+  transform: translateY(-4px);
+  border-color: rgba(0, 229, 255, 0.5);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 229, 255, 0.1);
 }
 
 .teaser-visual {
@@ -449,7 +451,7 @@ body::before {
   border: 1px solid var(--border);
   background: linear-gradient(180deg, rgba(20, 22, 25, 0.96), rgba(10, 12, 15, 0.98));
   overflow: hidden;
-  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card::before {
@@ -463,8 +465,8 @@ body::before {
 
 .card:hover {
   transform: translateY(-4px);
-  border-color: rgba(0, 229, 255, 0.4);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+  border-color: rgba(0, 229, 255, 0.5);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 229, 255, 0.1);
 }
 
 .card-head,
@@ -648,7 +650,7 @@ body::before {
 .media-stage-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -798,6 +800,37 @@ body::before {
   font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+/* Animation Utilities */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.project-spotlight.fade-transition {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.project-spotlight.fade-hidden {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.project-spotlight.fade-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .machine-node.live {
