@@ -25,7 +25,8 @@
   --dim:#3a4455;
 }
 
-html,body{height:100%;overflow:hidden;}
+html{scroll-behavior:smooth;}
+body{min-height:100vh;overflow-x:hidden;overflow-y:auto;}
 
 body{
   background:var(--bg);
@@ -75,7 +76,7 @@ nav{
    MAIN STAGE  (fills remaining height)
 ================================== */
 #stage{
-  flex:1;
+  min-height:calc(100vh - 52px);
   display:grid;
   grid-template-columns:minmax(240px,25%) minmax(0,75%);
   grid-template-rows:1fr;
@@ -381,7 +382,143 @@ nav{
 #scroll-sections{
   position:relative;z-index:1;
   overflow-y:auto;
-  display:none; /* shown after terminal interaction */
+  display:block;
+  background:
+    radial-gradient(circle at top right, rgba(0,229,255,.08), transparent 28%),
+    linear-gradient(180deg, #06090d 0%, #0a0d12 100%);
+  border-top:1px solid var(--border);
+}
+.content-shell{
+  width:min(1120px, calc(100vw - 48px));
+  margin:0 auto;
+  padding:88px 0 96px;
+}
+.section-block + .section-block{margin-top:88px;}
+.section-kicker{
+  color:var(--cyan);
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
+.section-title{
+  font-family:'Syne',sans-serif;
+  color:#fff;
+  font-size:clamp(28px, 5vw, 54px);
+  line-height:1.02;
+  margin-bottom:18px;
+}
+.section-copy{
+  max-width:760px;
+  font-size:13px;
+  line-height:1.9;
+  color:var(--text);
+}
+.about-grid,
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:22px;
+  margin-top:36px;
+}
+.info-card{
+  border:1px solid var(--border);
+  background:linear-gradient(180deg, rgba(20,22,25,.95), rgba(10,12,15,.96));
+  padding:24px;
+  position:relative;
+  overflow:hidden;
+}
+.info-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, rgba(0,229,255,.08), transparent 48%);
+  pointer-events:none;
+}
+.info-card h3{
+  position:relative;
+  z-index:1;
+  color:#fff;
+  font-size:14px;
+  margin-bottom:14px;
+}
+.info-card p,
+.info-card li,
+.info-card a{
+  position:relative;
+  z-index:1;
+  font-size:12px;
+  line-height:1.9;
+  color:var(--text);
+}
+.info-card ul{
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.info-card a{
+  color:var(--cyan);
+  text-decoration:none;
+}
+.info-card a:hover{color:#fff;}
+.skill-matrix{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:10px;
+}
+.metric-row{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  padding:11px 0;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.metric-row:first-child{border-top:none;padding-top:0;}
+.metric-row span:first-child{color:var(--dim);}
+.contact-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:24px;
+}
+.action-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:160px;
+  padding:12px 18px;
+  border:1px solid var(--border2);
+  text-decoration:none;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:10px;
+  color:var(--text);
+  background:rgba(10,11,13,.9);
+  transition:all .2s;
+}
+.action-btn:hover{
+  color:var(--cyan);
+  border-color:var(--cyan);
+  background:var(--cyan2);
+}
+.action-btn.primary{
+  color:#001217;
+  background:var(--cyan);
+  border-color:var(--cyan);
+}
+.action-btn.primary:hover{
+  color:#001217;
+  filter:brightness(1.08);
+}
+.nav-links a.active{
+  color:var(--cyan);
+}
+@media (max-width: 900px){
+  .about-grid,
+  .contact-grid,
+  .skill-matrix{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 <link rel="stylesheet" href="media.css"/>
@@ -392,13 +529,15 @@ nav{
 <nav>
   <div class="nav-logo">HS // Portfolio</div>
   <div class="nav-links">
-    <a href="portfolio.html">Home</a>
-    <a href="#about">About</a>
+    <a href="#top" data-section-link="top">Home</a>
+    <a href="#about" data-section-link="about">About</a>
     <a href="projects.html">Projects</a>
-    <a href="#contact">Contact</a>
+    <a href="#contact" data-section-link="contact">Contact</a>
   </div>
   <button class="nav-dl">Download CV</button>
 </nav>
+
+<div id="top"></div>
 
 <!-- STAGE -->
 <div id="stage">
@@ -591,6 +730,91 @@ nav{
   </div><!-- #right-panel -->
 </div><!-- #stage -->
 
+<div id="scroll-sections">
+  <div class="content-shell">
+    <section class="section-block" id="about">
+      <p class="section-kicker">About</p>
+      <h2 class="section-title">Engineering across firmware, boards, and web tools.</h2>
+      <p class="section-copy">
+        I build practical systems where electronics and software meet. My work ranges from PCB design and embedded development
+        to Python automation and web interfaces, with a focus on turning ideas into reliable tools that people can actually use.
+      </p>
+
+      <div class="about-grid">
+        <article class="info-card">
+          <h3>What I Work On</h3>
+          <div class="skill-matrix">
+            <div class="tag">ESP32 Systems</div>
+            <div class="tag">Custom PCBs</div>
+            <div class="tag">Python Automation</div>
+            <div class="tag">Flask / Django</div>
+            <div class="tag">Sensor Interfaces</div>
+            <div class="tag">Data Workflows</div>
+          </div>
+        </article>
+
+        <article class="info-card">
+          <h3>Build Profile</h3>
+          <div class="metric-row"><span>Core Strength</span><span>Hardware + Software Integration</span></div>
+          <div class="metric-row"><span>Preferred Stack</span><span>Python, ESP-IDF, KiCad</span></div>
+          <div class="metric-row"><span>Project Style</span><span>Fast prototypes that scale into usable products</span></div>
+          <div class="metric-row"><span>Focus Area</span><span>Automation, embedded control, and system design</span></div>
+        </article>
+
+        <article class="info-card">
+          <h3>Approach</h3>
+          <p>
+            I enjoy solving problems end to end: designing the board, writing the firmware, building the backend logic,
+            and shaping the interface so the final system feels coherent.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h3>Current Direction</h3>
+          <ul>
+            <li>Shipping embedded and IoT projects with cleaner interfaces and better observability.</li>
+            <li>Expanding Python tooling for automation, data handling, and engineering workflows.</li>
+            <li>Building portfolio projects that show both implementation depth and product thinking.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block" id="contact">
+      <p class="section-kicker">Contact</p>
+      <h2 class="section-title">Let?s build something useful.</h2>
+      <p class="section-copy">
+        I?m open to freelance work, collaboration, and engineering roles involving embedded systems, Python development,
+        automation, or technical product building.
+      </p>
+
+      <div class="contact-grid">
+        <article class="info-card">
+          <h3>Reach Out</h3>
+          <ul>
+            <li>Email: <a href="mailto:harshilsuthar8099@gmail.com">harshilsuthar8099@gmail.com</a></li>
+            <li>GitHub: <a href="https://github.com/harris8099" target="_blank" rel="noreferrer">github.com/harris8099</a></li>
+            <li>Projects: <a href="projects.html">Browse project archive</a></li>
+          </ul>
+          <div class="contact-actions">
+            <a class="action-btn primary" href="mailto:harshilsuthar8099@gmail.com">Email Me</a>
+            <a class="action-btn" href="https://github.com/harris8099" target="_blank" rel="noreferrer">GitHub Profile</a>
+          </div>
+        </article>
+
+        <article class="info-card">
+          <h3>Best Fit</h3>
+          <ul>
+            <li>Embedded product development with ESP32, firmware, and board-level design.</li>
+            <li>Python automation, data tooling, dashboards, and API-driven utilities.</li>
+            <li>Cross-disciplinary builds where hardware and software need to work as one system.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </div>
+</div>
+
 <script>
 /* ======================================
    STATE
@@ -610,6 +834,11 @@ const maxBtn   = document.getElementById('t-max-btn');
 const closeBtn = document.getElementById('t-close-btn');
 const rightPanel = document.getElementById('right-panel');
 const boardArea = document.getElementById('board-area');
+const navDownloadBtn = document.querySelector('.nav-dl');
+const sectionLinks = Array.from(document.querySelectorAll('[data-section-link]'));
+const observedSections = ['top', 'about', 'contact']
+  .map(id => document.getElementById(id))
+  .filter(Boolean);
 
 let triggered = false, booted = false, isMaximized = false, isMinimized = false, savedHeight = 0;
 
@@ -641,6 +870,73 @@ const shellNameByOS = {
 
 tPrompt.innerHTML = `${promptByOS[osClass]}&nbsp;`;
 tLabel.textContent = titleByOS[osClass];
+
+function setActiveNav(id) {
+  sectionLinks.forEach(link => {
+    link.classList.toggle('active', link.dataset.sectionLink === id);
+  });
+}
+
+setActiveNav('top');
+
+if ('IntersectionObserver' in window && observedSections.length) {
+  const sectionObserver = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+    if (visible?.target?.id) setActiveNav(visible.target.id);
+  }, {
+    threshold: [0.3, 0.55, 0.8],
+    rootMargin: '-10% 0px -35% 0px',
+  });
+
+  observedSections.forEach(section => sectionObserver.observe(section));
+}
+
+sectionLinks.forEach(link => {
+  link.addEventListener('click', (event) => {
+    const targetId = link.dataset.sectionLink;
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    event.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setActiveNav(targetId);
+  });
+});
+
+navDownloadBtn.addEventListener('click', () => {
+  const cvText = [
+    'HARSHIL SUTHAR',
+    'Electronics Engineer | Python Developer',
+    '',
+    'Focus Areas',
+    '- PCB and hardware design',
+    '- ESP32 and embedded systems',
+    '- Python automation and data workflows',
+    '- Flask and Django web applications',
+    '',
+    'Core Skills',
+    '- Python, C, C++, JavaScript, HTML, CSS',
+    '- ESP-IDF, FreeRTOS, KiCad, Pandas, NumPy',
+    '- Git, Linux, MQTT, LoRaWAN',
+    '',
+    'Links',
+    '- GitHub: https://github.com/harris8099',
+    '- Portfolio: https://github.com/harris8099/Portfolio-2.0',
+    '- Email: harshilsuthar8099@gmail.com',
+  ].join('\n');
+
+  const blob = new Blob([cvText], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = 'Harshil-Suthar-CV.txt';
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
 
 /* ======================================
    PWR LED - always on warm glow
@@ -830,13 +1126,23 @@ function runIntro() {
 const CMDS = {
   help: () => [
     ['tc', '   Commands:'],
+    ['tw', '     about     - view engineering profile'],
     ['tw', '     skills    - list all skills & tools'],
     ['tw', '     projects  - recent projects'],
     ['tw', '     contact   - get in touch'],
+    ['tw', '     home      - jump to landing section'],
     ['tw', '     status    - board system status'],
     ['tw', '     clear     - clear terminal'],
     ['tw', '     exit      - close terminal'],
   ],
+  about: () => {
+    setTimeout(() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+    return [
+      ['tc', '   ABOUT:'],
+      ['tw', '     Electronics engineer working across PCB design, firmware, and automation tooling.'],
+      ['tw', '     Strongest when hardware, embedded logic, and software need to fit together cleanly.'],
+    ];
+  },
   skills: () => [
     ['tc', '   SKILLS:'],
     ['tg', '     Languages  : Python  -  C  -  C++  -  JavaScript  -  HTML  -  CSS'],
@@ -852,10 +1158,18 @@ const CMDS = {
   ],
   contact: () => [
     ['tc', '   CONTACT:'],
+    ['tw', '     Email     : harshilsuthar8099@gmail.com'],
     ['tw', '     GitHub    : github.com/harris8099'],
     ['tw', '     Portfolio : harris8099.github.io/Portfolio-2.0'],
     ['ta', '     Open to   : freelance  -  collaboration  -  full-time roles'],
   ],
+  home: () => {
+    setTimeout(() => document.getElementById('top')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+    return [
+      ['tc', '   HOME:'],
+      ['tw', '     Landing view restored. Hardware boot panel is ready for interaction.'],
+    ];
+  },
   status: () => {
     const uptime = Math.floor(performance.now() / 1000);
     return [

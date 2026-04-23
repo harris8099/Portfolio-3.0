@@ -10,19 +10,22 @@
   <link rel="stylesheet" href="projects.css" />
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="portfolio.html">HS // Portfolio</a>
-    <nav class="topnav">
+  <nav class="site-nav">
+    <div class="nav-logo">HS // Portfolio</div>
+    <div class="nav-links">
       <a href="portfolio.html">Home</a>
+      <a href="portfolio.html#about">About</a>
       <a class="active" href="projects.html">Projects</a>
-    </nav>
-  </header>
+      <a href="portfolio.html#contact">Contact</a>
+    </div>
+    <button class="nav-dl" type="button">Download CV</button>
+  </nav>
 
   <main class="layout">
     <section class="hero">
       <p class="kicker">Interactive Project Lab</p>
       <h1>Explore My Work</h1>
-      <p class="sub">Filter by domain, search by keyword, and expand each card to view stack, highlights, and links.</p>
+      <p class="sub">See the strongest projects first, scan visual teasers by category, and open one focused project viewer instead of digging through hidden details inside every card.</p>
     </section>
 
     <section class="controls">
@@ -30,11 +33,47 @@
       <div id="filterRow" class="filters"></div>
     </section>
 
-    <section id="projectGrid" class="grid" aria-live="polite"></section>
+    <section id="featuredProject" class="featured-project" aria-live="polite"></section>
+    <section id="projectSpotlight" class="project-spotlight hidden" aria-live="polite"></section>
+    <section id="projectSections" class="project-sections" aria-live="polite"></section>
     <p id="emptyState" class="empty hidden">No projects matched your filter.</p>
   </main>
 
   <script src="projects-data.js"></script>
   <script src="projects.js"></script>
+  <script>
+    document.querySelector('.nav-dl')?.addEventListener('click', () => {
+      const cvText = [
+        'HARSHIL SUTHAR',
+        'Electronics Engineer | Python Developer',
+        '',
+        'Focus Areas',
+        '- PCB and hardware design',
+        '- ESP32 and embedded systems',
+        '- Python automation and data workflows',
+        '- Flask and Django web applications',
+        '',
+        'Core Skills',
+        '- Python, C, C++, JavaScript, HTML, CSS',
+        '- ESP-IDF, FreeRTOS, KiCad, Pandas, NumPy',
+        '- Git, Linux, MQTT, LoRaWAN',
+        '',
+        'Links',
+        '- GitHub: https://github.com/harris8099',
+        '- Portfolio: https://github.com/harris8099/Portfolio-2.0',
+        '- Email: harshilsuthar8099@gmail.com',
+      ].join('\n');
+
+      const blob = new Blob([cvText], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = 'Harshil-Suthar-CV.txt';
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+  </script>
 </body>
 </html>

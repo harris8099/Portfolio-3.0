@@ -1,26 +1,30 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="refresh" content="0; url=portfolio.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>USB-C Cable</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Redirecting to Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #0a0b0d;
+      color: #b8c4d4;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    a {
+      color: #00e5ff;
+    }
+  </style>
 </head>
 <body>
-  <main class="scene">
-    <div class="cable-wrap" aria-label="USB-C cable illustration">
-      <div class="wire"></div>
-
-      <div class="neck"></div>
-
-      <div class="plug-body">
-        <div class="plug-texture"></div>
-      </div>
-
-      <div class="tip"></div>
-    </div>
-  </main>
-
-  <script src="script.js"></script>
+  <p>If you are not redirected automatically, open <a href="portfolio.html">portfolio.html</a>.</p>
+  <script>
+    window.location.replace("portfolio.html");
+  </script>
 </body>
 </html>
