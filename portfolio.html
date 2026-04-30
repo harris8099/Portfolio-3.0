@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="projects.css"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -28,6 +29,16 @@
 html{scroll-behavior:smooth;}
 body{min-height:100vh;overflow-x:hidden;overflow-y:auto;}
 
+/* Page transition fade-in */
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+body {
+  animation: pageFadeIn 0.5s ease-out;
+}
+
 body{
   background:var(--bg);
   color:var(--text);
@@ -38,7 +49,7 @@ body{
 
 /* noise */
 body::before{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
   background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
   opacity:.5;
 }
@@ -64,6 +75,9 @@ nav{
   color:var(--dim);text-decoration:none;transition:color .2s;
 }
 .nav-links a:hover{color:var(--cyan);}
+.nav-links a.active{
+  color:var(--cyan);
+}
 .nav-dl{
   font-size:10px;letter-spacing:.12em;text-transform:uppercase;
   padding:6px 16px;border:1px solid var(--border2);color:var(--dim);
@@ -530,9 +544,6 @@ nav{
   color:#001217;
   filter:brightness(1.08);
 }
-.nav-links a.active{
-  color:var(--cyan);
-}
 @keyframes glitch {
   0% { transform: translate(0) }
   20% { transform: translate(-2px, 2px) }
@@ -582,6 +593,875 @@ nav{
     text-align: center;
   }
 }
+
+/* ==================================
+   SCROLL INDICATOR
+================================== */
+.scroll-indicator {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--dim);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
+  z-index: 10;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.scroll-indicator:hover {
+  color: var(--cyan);
+}
+
+.scroll-indicator svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+  40% { transform: translateX(-50%) translateY(-10px); }
+  60% { transform: translateX(-50%) translateY(-5px); }
+}
+
+/* ==================================
+   FOOTER
+================================== */
+.site-footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  background: var(--bg2);
+  padding: 48px 0 24px;
+}
+
+.footer-content {
+  width: min(1120px, calc(100vw - 48px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.footer-brand h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  color: var(--cyan);
+  margin-bottom: 8px;
+}
+
+.footer-brand p {
+  font-size: 12px;
+  color: var(--dim);
+  line-height: 1.6;
+}
+
+.footer-links h4,
+.footer-social h4 {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 16px;
+}
+
+.footer-links ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 12px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--cyan);
+}
+
+.footer-social {
+  display: flex;
+  flex-direction: column;
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+}
+
+.social-links a {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dim);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.social-links a:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: var(--cyan2);
+}
+
+.footer-bottom {
+  width: min(1120px, calc(100vw - 48px));
+  margin: 40px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--dim);
+}
+
+@media (max-width: 900px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    text-align: center;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+/* ==================================
+   APPLE-STYLE LAPTOP SHOWCASE
+================================== */
+.laptop-section {
+  position: relative;
+  height: 300vh;
+  background: var(--bg);
+}
+
+.laptop-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 2500px;
+  overflow: hidden;
+}
+
+.laptop-frame {
+  position: relative;
+  width: min(980px, 88vw);
+  max-width: 980px;
+  transform-style: preserve-3d;
+  transition: transform 0.1s linear;
+}
+
+/* Floating text elements - Apple style */
+.laptop-caption {
+  position: absolute;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 100;
+}
+
+.laptop-caption.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.laptop-caption h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 4vw, 48px);
+  color: #fff;
+  margin-bottom: 12px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.laptop-caption p {
+  font-size: 16px;
+  color: var(--text);
+  max-width: 400px;
+  line-height: 1.5;
+}
+
+.laptop-caption-top {
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+}
+
+.laptop-caption-top.visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+.laptop-caption-left {
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%) translateX(-30px);
+  text-align: left;
+}
+
+.laptop-caption-left.visible {
+  transform: translateY(-50%) translateX(0);
+}
+
+.laptop-caption-right {
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%) translateX(30px);
+  text-align: left;
+}
+
+.laptop-caption-right.visible {
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Laptop Base */
+.laptop-base {
+  position: relative;
+  width: 100%;
+  height: 24px;
+  background: linear-gradient(180deg, 
+    #2a2e35 0%, 
+    #1a1d22 15%,
+    #0f1114 100%
+  );
+  border-radius: 2px 2px 14px 14px;
+  box-shadow: 
+    0 20px 80px rgba(0,0,0,0.9),
+    0 10px 40px rgba(0,0,0,0.6);
+  transform-origin: top center;
+  perspective: 1000px;
+}
+
+/* Trackpad notch representation */
+.laptop-base::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 6px;
+  background: #0a0b0d;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Keyboard representation */
+.laptop-base::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 10%;
+  right: 10%;
+  height: 10px;
+  background: repeating-linear-gradient(90deg, 
+    rgba(255,255,255,0.03) 0, 
+    rgba(255,255,255,0.03) 20px, 
+    transparent 20px, 
+    transparent 24px
+  );
+  opacity: 0.5;
+  mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+/* Laptop Screen */
+.laptop-screen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: #000;
+  border-radius: 18px 18px 0 0;
+  overflow: hidden;
+  box-shadow: 
+    0 -5px 40px rgba(0,229,255,0.08),
+    inset 0 0 60px rgba(0,0,0,0.8);
+  border: 1px solid #2a2e35;
+  border-bottom: none;
+  transform-origin: bottom center;
+  transform: rotateX(-100deg);
+  opacity: 1;
+  transition: transform 0.1s linear, box-shadow 0.3s ease;
+  z-index: 2;
+}
+
+/* Screen Reflection */
+.laptop-screen::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255,255,255,0.05) 0%, 
+    transparent 40%, 
+    rgba(255,255,255,0.02) 60%, 
+    transparent 100%
+  );
+  z-index: 5;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.laptop-screen.open {
+  box-shadow: 
+    0 -20px 100px rgba(0,229,255,0.15),
+    inset 0 0 60px rgba(0,0,0,0.8);
+}
+
+/* Back of the laptop lid */
+.laptop-lid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, #1a1d24 0%, #0f1114 100%);
+  border-radius: 16px 16px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+
+.laptop-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  color: var(--dim);
+  letter-spacing: 0.2em;
+  opacity: 0.5;
+}
+
+/* Screen Bezel */
+.laptop-bezel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #0a0b0d;
+  padding: 10px 10px 0 10px;
+}
+
+/* Camera notch */
+.laptop-notch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: #1a1d24;
+  border-radius: 50%;
+  box-shadow: inset 0 0 2px rgba(0,0,0,0.8);
+  z-index: 10;
+}
+
+.laptop-notch::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3px;
+  height: 3px;
+  background: #0a2244;
+  border-radius: 50%;
+}
+
+/* Screen Display Area */
+.laptop-display {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--bg2);
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+}
+
+/* Screen Glow Effect */
+.laptop-screen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0,229,255,0.2) 0%, transparent 60%);
+  pointer-events: none;
+  border-radius: 18px 18px 0 0;
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 3;
+}
+
+.laptop-screen.open::after {
+  opacity: 1;
+}
+
+/* Ambient glow on base */
+.laptop-base-glow {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 40px;
+  background: radial-gradient(ellipse at center, rgba(0,229,255,0.15), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.laptop-screen.open ~ .laptop-base-glow {
+  opacity: 1;
+}
+
+/* About content inside laptop */
+.laptop-about {
+  height: 100%;
+  padding: 22px 24px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.laptop-about .section-kicker {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.laptop-about .section-title {
+  text-align: center;
+  font-size: clamp(17px, 2.2vw, 24px);
+  margin-bottom: 12px;
+}
+
+.laptop-about .section-copy {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 14px;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.laptop-about .about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.laptop-about .info-card {
+  padding: 12px;
+}
+
+.laptop-about .info-card h3 {
+  font-size: 11px;
+  margin-bottom: 8px;
+}
+
+.laptop-about .skill-matrix {
+  gap: 6px;
+}
+
+.laptop-about .skill-matrix .tag {
+  padding: 2px 6px;
+  font-size: 9px;
+}
+
+.laptop-about .metric-row {
+  font-size: 9px;
+  padding: 6px 0;
+}
+
+.laptop-about .metric-row span:first-child {
+  font-size: 9px;
+}
+
+.laptop-about p {
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.laptop-about ul {
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+/* Staggered Content Reveal */
+.laptop-screen.open .laptop-about > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.laptop-about > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.laptop-about .section-kicker { transition-delay: 0.1s; }
+.laptop-about .section-title { transition-delay: 0.2s; }
+.laptop-about .section-copy { transition-delay: 0.3s; }
+.laptop-about .about-grid > article:nth-child(1) { transition-delay: 0.4s; }
+.laptop-about .about-grid > article:nth-child(2) { transition-delay: 0.5s; }
+.laptop-about .about-grid > article:nth-child(3) { transition-delay: 0.6s; }
+.laptop-about .about-grid > article:nth-child(4) { transition-delay: 0.7s; }
+
+/* ==================================
+   PROJECTS SECTION
+================================== */
+.projects-section {
+  padding: 56px 24px 72px;
+  background: var(--bg);
+  min-height: auto;
+}
+
+.projects-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.projects-hero {
+  max-width: 760px;
+  text-align: left;
+  margin-bottom: 28px;
+}
+
+.projects-hero .kicker {
+  color: var(--cyan);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.projects-hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(30px, 4.4vw, 46px);
+  color: #fff;
+  margin-bottom: 14px;
+  font-weight: 700;
+}
+
+.projects-hero .sub {
+  color: var(--text);
+  font-size: 13px;
+  max-width: 680px;
+  margin: 0;
+  line-height: 1.8;
+}
+
+.projects-controls {
+  margin-bottom: 22px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  background: rgba(15,17,20,.9);
+  display: grid;
+  gap: 14px;
+}
+
+.projects-controls input {
+  width: 100%;
+  max-width: none;
+  padding: 12px 14px;
+  background: #090c10;
+  border: 1px solid var(--border2);
+  border-radius: 0;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  margin-bottom: 0;
+}
+
+.projects-controls input:focus {
+  outline: none;
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 1px rgba(0,229,255,.15);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+.empty {
+  margin-top: 20px;
+  color: var(--dim);
+  font-size: 12px;
+  text-align: center;
+}
+
+.filter-chip {
+  padding: 6px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-chip:hover,
+.filter-chip.active {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: var(--cyan2);
+}
+
+/* ==================================
+   CONTACT SECTION
+================================== */
+.contact-section {
+  padding: 80px 24px;
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+.contact-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.contact-hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.contact-hero .kicker {
+  color: var(--dim);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.contact-hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 5vw, 48px);
+  color: var(--white);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.contact-hero .sub {
+  color: var(--text);
+  font-size: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.contact-terminal {
+  background: linear-gradient(180deg, #15181c, #0a0b0d);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.contact-terminal .t-head {
+  background: #1a1d24;
+  border-bottom: 1px solid var(--border2);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.contact-terminal .t-dots span {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #ff5f56;
+  margin-right: 6px;
+}
+
+.contact-terminal .t-dots span:nth-child(2) { background: #ffbd2e; }
+.contact-terminal .t-dots span:nth-child(3) { background: #27c93f; margin-right: 16px; }
+
+.contact-terminal .t-body {
+  padding: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.contact-terminal .t-line {
+  margin-bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.contact-terminal .t-prompt {
+  color: var(--cyan);
+  margin-right: 12px;
+  white-space: nowrap;
+}
+
+.contact-terminal .t-input-group {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-bottom: 16px;
+  min-width: 200px;
+}
+
+.contact-terminal .t-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed var(--border2);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  padding: 4px 0;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+.contact-terminal .t-input:focus {
+  border-bottom-color: var(--cyan);
+}
+
+.contact-terminal textarea.t-input {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.contact-terminal .t-btn {
+  background: var(--cyan);
+  color: #001217;
+  border: none;
+  padding: 8px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-top: 10px;
+  align-self: flex-start;
+  transition: all 0.2s;
+}
+
+.contact-terminal .t-btn:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+}
+
+.status-msg {
+  margin-top: 16px;
+  font-size: 12px;
+}
+
+.status-msg.success { color: var(--green); }
+.status-msg.error { color: #ff5f56; }
+
+.contact-links {
+  margin-top: 40px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.contact-links a {
+  color: var(--cyan);
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.contact-links a:hover {
+  border-color: var(--cyan);
+  background: var(--cyan2);
+}
+
+/* Mobile adjustments */
+@media (max-width: 900px) {
+  .laptop-section {
+    height: auto;
+    min-height: 100vh;
+    padding: 40px 0;
+  }
+  
+  .laptop-container {
+    position: relative;
+    height: auto;
+    perspective: none;
+  }
+  
+  .laptop-frame {
+    width: 95vw;
+    transform: none !important;
+  }
+  
+  .laptop-screen {
+    aspect-ratio: auto;
+    height: auto;
+    min-height: 500px;
+  }
+  
+  .laptop-base {
+    height: 20px;
+  }
+  
+  .laptop-about .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-section {
+    padding: 44px 18px 56px;
+  }
+
+  .projects-hero {
+    text-align: center;
+    margin: 0 auto 24px;
+  }
+
+  .projects-hero .sub {
+    margin: 0 auto;
+  }
+  
+  .laptop-caption {
+    display: none;
+  }
+}
 </style>
 <link rel="stylesheet" href="media.css"/>
 </head>
@@ -593,10 +1473,10 @@ nav{
   <div class="nav-links">
     <a href="#top" data-section-link="top">Home</a>
     <a href="#about" data-section-link="about">About</a>
-    <a href="projects.html">Projects</a>
-    <a href="contact.html">Contact</a>
+    <a href="#projects" data-section-link="projects">Projects</a>
+    <a href="#contact" data-section-link="contact">Contact</a>
   </div>
-  <button class="nav-dl">Download CV</button>
+  <button class="nav-dl">Export Profile</button>
 </nav>
 
 <div id="top"></div>
@@ -769,6 +1649,14 @@ nav{
           </g>
         </svg>
       </div><!-- #pcb-wrap -->
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+      <span>Scroll</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
     </div><!-- #board-area -->
 
     <!-- TERMINAL PANEL - slides up -->
@@ -792,59 +1680,217 @@ nav{
   </div><!-- #right-panel -->
 </div><!-- #stage -->
 
-<div id="scroll-sections">
-  <div class="content-shell">
-    <section class="section-block" id="about">
-      <p class="section-kicker">About</p>
-      <h2 class="section-title">Engineering across firmware, boards, and web tools.</h2>
-      <p class="section-copy">
-        I build practical systems where electronics and software meet. My work ranges from PCB design and embedded development
-        to Python automation and web interfaces, with a focus on turning ideas into reliable tools that people can actually use.
-      </p>
+<!-- LAPTOP SCROLL SECTION - Apple-style pinned showcase -->
+<section class="laptop-section" id="about">
+  <div class="laptop-container">
+    <!-- Floating Captions - Apple style -->
+    <div class="laptop-caption laptop-caption-top" id="captionIntro">
+      <h3>Introducing.</h3>
+      <p>The complete engineering workstation.</p>
+    </div>
+    
+    <div class="laptop-caption laptop-caption-left" id="captionSkills">
+      <h3>Hardware + Software.</h3>
+      <p>ESP32 systems to Python automation.<br>PCB design to web deployment.</p>
+    </div>
+    
+    <div class="laptop-caption laptop-caption-right" id="captionStack">
+      <h3>Full Stack.</h3>
+      <p>KiCad · ESP-IDF · Python · Flask · Django</p>
+    </div>
+    
+    <div class="laptop-frame" id="laptopFrame">
+      <!-- Laptop Screen -->
+      <div class="laptop-screen" id="laptopScreen">
+        <!-- Lid Back (visible when closed) -->
+        <div class="laptop-lid">
+          <div class="laptop-logo">HS // PORTFOLIO</div>
+        </div>
+        
+        <div class="laptop-notch"></div>
+        <div class="laptop-bezel">
+          <div class="laptop-display">
+            <!-- About Content Inside Laptop -->
+            <div class="laptop-about">
+              <p class="section-kicker">System Profile</p>
+              <h2 class="section-title">Engineering across firmware, boards, and web tools.</h2>
+              <p class="section-copy">
+                I build practical systems where electronics and software meet. My work ranges from PCB design and embedded development
+                to Python automation and web interfaces, with a focus on turning ideas into reliable tools that people can actually use.
+              </p>
 
-      <div class="about-grid">
-        <article class="info-card">
-          <h3>What I Work On</h3>
-          <div class="skill-matrix">
-            <div class="tag">ESP32 Systems</div>
-            <div class="tag">Custom PCBs</div>
-            <div class="tag">Python Automation</div>
-            <div class="tag">Flask / Django</div>
-            <div class="tag">Sensor Interfaces</div>
-            <div class="tag">Data Workflows</div>
+              <div class="about-grid">
+                <article class="info-card">
+                  <h3>What I Work On</h3>
+                  <div class="skill-matrix">
+                    <div class="tag">ESP32 Systems</div>
+                    <div class="tag">Custom PCBs</div>
+                    <div class="tag">Python Automation</div>
+                    <div class="tag">Flask / Django</div>
+                    <div class="tag">Sensor Interfaces</div>
+                    <div class="tag">Data Workflows</div>
+                  </div>
+                </article>
+
+                <article class="info-card">
+                  <h3>Build Profile</h3>
+                  <div class="metric-row"><span>Core Strength</span><span>Hardware + Software Integration</span></div>
+                  <div class="metric-row"><span>Preferred Stack</span><span>Python, ESP-IDF, KiCad</span></div>
+                  <div class="metric-row"><span>Project Style</span><span>Fast prototypes that scale into usable products</span></div>
+                  <div class="metric-row"><span>Focus Area</span><span>Automation, embedded control, and system design</span></div>
+                </article>
+
+                <article class="info-card">
+                  <h3>Approach</h3>
+                  <p>
+                    I enjoy solving problems end to end: designing the board, writing the firmware, building the backend logic,
+                    and shaping the interface so the final system feels coherent.
+                  </p>
+                </article>
+
+                <article class="info-card">
+                  <h3>Current Direction</h3>
+                  <ul>
+                    <li>Shipping embedded and IoT projects with cleaner interfaces and better observability.</li>
+                    <li>Expanding Python tooling for automation, data handling, and engineering workflows.</li>
+                    <li>Building portfolio projects that show both implementation depth and product thinking.</li>
+                  </ul>
+                </article>
+              </div>
+            </div>
           </div>
-        </article>
-
-        <article class="info-card">
-          <h3>Build Profile</h3>
-          <div class="metric-row"><span>Core Strength</span><span>Hardware + Software Integration</span></div>
-          <div class="metric-row"><span>Preferred Stack</span><span>Python, ESP-IDF, KiCad</span></div>
-          <div class="metric-row"><span>Project Style</span><span>Fast prototypes that scale into usable products</span></div>
-          <div class="metric-row"><span>Focus Area</span><span>Automation, embedded control, and system design</span></div>
-        </article>
-
-        <article class="info-card">
-          <h3>Approach</h3>
-          <p>
-            I enjoy solving problems end to end: designing the board, writing the firmware, building the backend logic,
-            and shaping the interface so the final system feels coherent.
-          </p>
-        </article>
-
-        <article class="info-card">
-          <h3>Current Direction</h3>
-          <ul>
-            <li>Shipping embedded and IoT projects with cleaner interfaces and better observability.</li>
-            <li>Expanding Python tooling for automation, data handling, and engineering workflows.</li>
-            <li>Building portfolio projects that show both implementation depth and product thinking.</li>
-          </ul>
-        </article>
+        </div>
       </div>
-    </section>
-
-
+      <!-- Ambient Glow (Added) -->
+      <div class="laptop-base-glow"></div>
+      <!-- Laptop Base -->
+      <div class="laptop-base"></div>
+    </div>
   </div>
-</div>
+</section>
+
+<!-- PROJECTS SECTION -->
+<section id="projects" class="projects-section">
+  <div class="projects-container">
+    <div class="projects-hero">
+      <p class="kicker">Interactive Project Lab</p>
+      <h1>Explore My Work</h1>
+      <p class="sub">See the strongest projects first, scan visual teasers by category, and open one focused project viewer instead of digging through hidden details inside every card.</p>
+    </div>
+
+    <div class="projects-controls">
+      <input id="searchInput" type="text" placeholder="Search project, tech, keyword..." />
+      <div id="filterRow" class="filters"></div>
+    </div>
+
+    <section id="featuredProject" class="featured-project" aria-live="polite"></section>
+    <section id="projectSpotlight" class="project-spotlight hidden" aria-live="polite"></section>
+    <section id="projectSections" class="project-sections" aria-live="polite"></section>
+    <p id="emptyState" class="empty hidden">No projects matched your filter.</p>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact" class="contact-section">
+  <div class="contact-container">
+    <div class="contact-hero">
+      <p class="kicker">Communication Protocol</p>
+      <h1>Let's Connect</h1>
+      <p class="sub">Use the terminal below to send a direct transmission to my inbox. I am open to freelance work, collaboration, and engineering roles.</p>
+    </div>
+
+    <div class="contact-terminal">
+      <div class="t-head">
+        <div class="t-dots"><span></span><span></span><span></span></div>
+        <div>harshil@contact-relay ~ bash</div>
+      </div>
+      <div class="t-body">
+        <div class="t-line">
+          <span class="t-prompt">server$</span>
+          <span>Initializing secure mail transport... OK</span>
+        </div>
+        <div class="t-line">
+          <span class="t-prompt">server$</span>
+          <span>Awaiting user input for message parameters.</span>
+        </div>
+        
+        <!-- FORMSPREE CONFIGURATION: Replace YOUR_FORMSPREE_ID with your actual Formspree form ID from https://formspree.io -->
+        <form id="terminal-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+          <div class="t-line">
+            <span class="t-prompt">user@set-name:~$</span>
+            <div class="t-input-group">
+              <input class="t-input" type="text" name="name" placeholder="Enter your name" required autocomplete="off" spellcheck="false" />
+            </div>
+          </div>
+          
+          <div class="t-line">
+            <span class="t-prompt">user@set-email:~$</span>
+            <div class="t-input-group">
+              <input class="t-input" type="email" name="_replyto" placeholder="Enter your email" required autocomplete="off" spellcheck="false" />
+            </div>
+          </div>
+          
+          <div class="t-line">
+            <span class="t-prompt">user@set-body:~$</span>
+            <div class="t-input-group">
+              <textarea class="t-input" name="message" placeholder="Type your message here..." required spellcheck="false"></textarea>
+            </div>
+          </div>
+
+          <div class="t-line">
+            <span class="t-prompt">user@action:~$</span>
+            <div style="display: flex; flex-direction: column;">
+              <button class="t-btn" type="submit">./send_message.sh</button>
+              <div id="form-status" class="status-msg"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <div class="contact-links">
+      <a href="mailto:harshilsuthar8099@gmail.com">harshilsuthar8099@gmail.com</a>
+      <a href="https://github.com/harris8099" target="_blank" rel="noreferrer">GitHub Profile</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h3>HS // Portfolio</h3>
+      <p>Electronics Engineer & Python Developer<br>Building systems that bridge hardware and software.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#top">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-social">
+      <h4>Connect</h4>
+      <div class="social-links">
+        <a href="https://github.com/harris8099" target="_blank" rel="noreferrer" aria-label="GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="mailto:harshilsuthar8099@gmail.com" aria-label="Email">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+        <a href="#projects" aria-label="Projects">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Harshil Suthar. All systems operational.</span>
+    <span>Designed & Engineered with precision.</span>
+  </div>
+</footer>
 
 <script>
 /* ======================================
@@ -867,7 +1913,7 @@ const rightPanel = document.getElementById('right-panel');
 const boardArea = document.getElementById('board-area');
 const navDownloadBtn = document.querySelector('.nav-dl');
 const sectionLinks = Array.from(document.querySelectorAll('[data-section-link]'));
-const observedSections = ['top', 'about']
+const observedSections = ['top', 'about', 'projects', 'contact']
   .map(id => document.getElementById(id))
   .filter(Boolean);
 
@@ -908,22 +1954,21 @@ function setActiveNav(id) {
   });
 }
 
-setActiveNav('top');
-
-if ('IntersectionObserver' in window && observedSections.length) {
-  const sectionObserver = new IntersectionObserver((entries) => {
-    const visible = entries
-      .filter(entry => entry.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-    if (visible?.target?.id) setActiveNav(visible.target.id);
-  }, {
-    threshold: [0.3, 0.55, 0.8],
-    rootMargin: '-10% 0px -35% 0px',
+function updateActiveNav() {
+  let currentSection = 'top';
+  const scrollPos = window.scrollY + window.innerHeight / 3;
+  
+  observedSections.forEach(section => {
+    if (scrollPos >= section.offsetTop) {
+      currentSection = section.id;
+    }
   });
-
-  observedSections.forEach(section => sectionObserver.observe(section));
+  
+  setActiveNav(currentSection);
 }
+
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+updateActiveNav();
 
 sectionLinks.forEach(link => {
   link.addEventListener('click', (event) => {
@@ -1029,6 +2074,14 @@ function openTerminal() {
   maxBtn.textContent = '[]';
   tPanel.classList.add('open');
   tPanel.style.removeProperty('height');
+  
+  // Auto-scroll terminal into view on mobile/tablet
+  if (window.innerWidth <= 900) {
+    setTimeout(() => {
+      tPanel.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }, 100);
+  }
+  
   if (!booted) {
     booted = true;
     tBody.innerHTML = '';
@@ -1085,7 +2138,7 @@ maxBtn.addEventListener('click', maximizeTerminal);
 
 /* ======================================
    CLICK TRIGGER
-====================================== */
+===================================== */
 pcbWrap.addEventListener('click', triggerBoot);
 pcbWrap.addEventListener('keydown', e => {
   if (e.key === 'Enter' || e.key === ' ') {
@@ -1093,11 +2146,6 @@ pcbWrap.addEventListener('keydown', e => {
     triggerBoot();
   }
 });
-
-/* ======================================
-   SCROLL/INTERSECT TRIGGER
-====================================== */
-// disabled auto-trigger so interaction starts only on intentional user action
 
 /* ======================================
    TERMINAL LINE HELPER
@@ -1221,7 +2269,7 @@ const CMDS = {
   reboot: () => {
     setTimeout(() => {
       tBody.innerHTML = '';
-      runBootSequence();
+      runIntro();
     }, 600);
     return [['tr', '   [SYS] Triggering hardware reset...']];
   },
@@ -1308,7 +2356,7 @@ document.getElementById('btn-rst').addEventListener('click', (e) => {
     addLine('tr', '   [HW] EN button pressed. Hardware reset triggered...');
     setTimeout(() => {
       tBody.innerHTML = '';
-      runBootSequence();
+      runIntro();
     }, 600);
   }
 });
@@ -1321,12 +2369,137 @@ setInterval(() => {
   if (!booted) return;
   ledPhase += 0.05;
   const intensity = 0.5 + Math.sin(ledPhase) * 0.5;
-  const a = Math.round(intensity * 200);
   ledIO2R.style.filter = intensity > 0.7
     ? `drop-shadow(0 0 ${Math.round(intensity*8)}px rgba(0,229,255,${intensity.toFixed(2)}))`
     : '';
 }, 50);
+
+/* ======================================
+   APPLE-STYLE LAPTOP SCROLL ANIMATION
+====================================== */
+(function initLaptopScroll() {
+  const laptopSection = document.getElementById('about');
+  const laptopScreen = document.getElementById('laptopScreen');
+  const captionIntro = document.getElementById('captionIntro');
+  const captionSkills = document.getElementById('captionSkills');
+  const captionStack = document.getElementById('captionStack');
+  
+  if (!laptopSection || !laptopScreen) return;
+  if (window.innerWidth <= 900) return;
+  
+  let ticking = false;
+  
+  function easeOutExpo(t) {
+    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+  }
+  
+  function updateLaptop() {
+    const rect = laptopSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const sectionHeight = laptopSection.offsetHeight;
+    
+    const scrolled = -rect.top;
+    const totalScroll = sectionHeight - windowHeight;
+    const progress = Math.max(0, Math.min(1, scrolled / totalScroll));
+    
+    // Captions Logic - Smooth transitions between phases
+    if (captionIntro) {
+      const opacity = progress < 0.2 ? Math.min(1, progress / 0.05) : Math.max(0, 1 - (progress - 0.2) / 0.1);
+      captionIntro.style.opacity = opacity;
+      captionIntro.style.transform = `translateX(-50%) translateY(${30 - opacity * 30}px)`;
+    }
+    
+    if (captionSkills) {
+      const opacity = (progress > 0.35 && progress < 0.6) ? Math.min(1, (progress - 0.35) / 0.08) : (progress >= 0.6 ? Math.max(0, 1 - (progress - 0.6) / 0.1) : 0);
+      captionSkills.style.opacity = opacity;
+      captionSkills.style.transform = `translateY(-50%) translateX(${opacity * 20 - 20}px)`;
+    }
+    
+    if (captionStack) {
+      const opacity = progress > 0.7 ? Math.min(1, (progress - 0.7) / 0.08) : 0;
+      captionStack.style.opacity = opacity;
+      captionStack.style.transform = `translateY(-50%) translateX(${20 - opacity * 20}px)`;
+    }
+    
+    // Laptop Animation Phases
+    const frame = document.getElementById('laptopFrame');
+    
+    // Phase 1: Zoom In (0% -> 30%)
+    if (progress < 0.3) {
+      const p = progress / 0.3;
+      const eased = easeOutExpo(p);
+      const scale = 0.6 + (eased * 0.4);
+      frame.style.transform = `scale(${scale})`;
+      laptopScreen.style.transform = `rotateX(-100deg)`;
+      laptopScreen.classList.remove('open');
+    } 
+    // Phase 2: Lid Open (30% -> 80%)
+    else if (progress < 0.8) {
+      const p = (progress - 0.3) / 0.5;
+      const eased = easeOutExpo(p);
+      const rotateX = -100 + (eased * 100);
+      frame.style.transform = `scale(1)`;
+      laptopScreen.style.transform = `rotateX(${rotateX}deg)`;
+      if (p > 0.8) laptopScreen.classList.add('open');
+      else laptopScreen.classList.remove('open');
+    }
+    // Phase 3: Final State
+    else {
+      frame.style.transform = `scale(1)`;
+      laptopScreen.style.transform = `rotateX(0deg)`;
+      laptopScreen.classList.add('open');
+    }
+    
+    ticking = false;
+  }
+  
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateLaptop);
+      ticking = true;
+    }
+  }, { passive: true });
+  
+  updateLaptop();
+})();
+
+/* ======================================
+   CONTACT FORM HANDLER
+====================================== */
+(function initContactForm() {
+  const form = document.getElementById("terminal-form");
+  const status = document.getElementById("form-status");
+  
+  if (!form) return;
+  
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    status.className = 'status-msg';
+    status.textContent = '[sys] Transmitting packets...';
+    
+    try {
+      const res = await fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        status.textContent = '[ok] Transmission successful. I will respond shortly.';
+        status.classList.add('success');
+        form.reset();
+      } else {
+        status.textContent = '[error] Transmission failed.';
+        status.classList.add('error');
+      }
+    } catch (err) {
+      status.textContent = '[error] Protocol failure.';
+      status.classList.add('error');
+    }
+  });
+})();
 </script>
+<script src="projects-data.js"></script>
+<script src="projects.js"></script>
 </body>
 </html>
-
