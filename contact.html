@@ -144,6 +144,12 @@
   </style>
 </head>
 <body>
+  <aside class="left-rail" aria-label="Section navigation">
+    <a href="portfolio.html" class="rail-item" title="Home">Home</a>
+    <a href="portfolio.html#about" class="rail-item" title="About">About</a>
+    <a href="projects.html" class="rail-item" title="Projects">Projects</a>
+    <a href="contact.html" class="rail-item active" aria-current="page" title="Contact">Contact</a>
+  </aside>
   <nav class="site-nav">
     <div class="nav-logo">HS // Portfolio</div>
     <div class="nav-links">
@@ -152,7 +158,10 @@
       <a href="projects.html">Projects</a>
       <a class="active" href="contact.html">Contact</a>
     </div>
-    <button class="nav-dl" type="button">Export Profile</button>
+    <div class="nav-actions">
+      <button class="theme-toggle" type="button" aria-label="Toggle theme">Theme</button>
+      <button class="nav-dl" type="button">Export Profile</button>
+    </div>
   </nav>
 
   <main class="layout">
@@ -253,6 +262,24 @@
   </footer>
 
   <script>
+    (function initTheme() {
+      const root = document.documentElement;
+      const toggle = document.querySelector('.theme-toggle');
+      const saved = localStorage.getItem('site-theme');
+      const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      const initial = saved || (prefersLight ? 'light' : 'dark');
+      root.setAttribute('data-theme', initial);
+      if (toggle) {
+        toggle.textContent = initial === 'light' ? 'Dark' : 'Light';
+        toggle.addEventListener('click', () => {
+          const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+          root.setAttribute('data-theme', next);
+          localStorage.setItem('site-theme', next);
+          toggle.textContent = next === 'light' ? 'Dark' : 'Light';
+        });
+      }
+    })();
+
     document.querySelector('.nav-dl')?.addEventListener('click', () => {
       const cvText = [
         'HARSHIL SUTHAR',

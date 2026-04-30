@@ -11,6 +11,8 @@
   let query = '';
   let selectedProjectName = null;
   let currentSpotlightProject = null;
+  const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
 
   const repoStats = {};
   const domainOrder = [
@@ -404,6 +406,119 @@
     });
   }
 
+  function initTeaserTilt() {
+    const cards = document.querySelectorAll('.project-teaser');
+    cards.forEach((card) => {
+      card.style.transform = '';
+      card.style.setProperty('--mx', '50%');
+      card.style.setProperty('--my', '50%');
+      if (reducedMotion || coarsePointer) return;
+
+      card.addEventListener('pointermove', (event) => {
+        const rect = card.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const px = x / rect.width;
+        const py = y / rect.height;
+        const rotateY = (px - 0.5) * 8;
+        const rotateX = (0.5 - py) * 8;
+        card.style.transform = `perspective(900px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
+        card.style.setProperty('--mx', `${(px * 100).toFixed(2)}%`);
+        card.style.setProperty('--my', `${(py * 100).toFixed(2)}%`);
+      });
+
+      card.addEventListener('pointerleave', () => {
+        card.style.transform = '';
+        card.style.setProperty('--mx', '50%');
+        card.style.setProperty('--my', '50%');
+      });
+    });
+  }
+
+  function initSpotlightEffects(project, scope) {
+    if (!scope || reducedMotion || coarsePointer) return;
+    const content = scope.querySelector('.spotlight-content');
+    if (content) {
+      content.addEventListener('pointermove', (event) => {
+        const rect = content.getBoundingClientRect();
+        const rx = ((event.clientY - rect.top) / rect.height - 0.5) * -3;
+        const ry = ((event.clientX - rect.left) / rect.width - 0.5) * 3;
+        content.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+      });
+      content.addEventListener('pointerleave', () => {
+        content.style.transform = '';
+      });
+    }
+
+    if (project.interaction?.type === 'tifan-machine') {
+      scope.querySelectorAll('.machine-diagram').forEach((diagram) => {
+        diagram.addEventListener('pointermove', (event) => {
+          const rect = diagram.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+          diagram.querySelectorAll('.machine-node').forEach((node) => {
+            const nr = node.getBoundingClientRect();
+            const cx = nr.left - rect.left + nr.width / 2;
+            const cy = nr.top - rect.top + nr.height / 2;
+            const dist = Math.hypot(cx - x, cy - y);
+            node.style.boxShadow = dist < 120 ? '0 0 18px rgba(0, 229, 255, 0.35)' : '';
+          });
+        });
+      });
+    }
+
+    if (project.interaction?.type === 'pcb-explorer') {
+      scope.querySelectorAll('.pcb-canvas').forEach((canvas) => {
+        canvas.addEventListener('pointermove', (event) => {
+          const rect = canvas.getBoundingClientRect();
+          const mx = ((event.clientX - rect.left) / rect.width - 0.5) * 10;
+          const my = ((event.clientY - rect.top) / rect.height - 0.5) * 10;
+          canvas.querySelectorAll('.pcb-block').forEach((block, i) => {
+            block.style.transform = `translate(${(mx * (0.2 + i * 0.1)).toFixed(2)}px, ${(my * (0.2 + i * 0.1)).toFixed(2)}px)`;
+          });
+        });
+        canvas.addEventListener('pointerleave', () => {
+          canvas.querySelectorAll('.pcb-block').forEach((block) => {
+            block.style.transform = '';
+          });
+        });
+      });
+    }
+
+    if (project.interaction?.type === 'logic-sim') {
+      scope.querySelectorAll('.logic-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const panel = scope.querySelector(`.logic-panel[data-logic-panel="${tab.dataset.state}"]`);
+          const gate = panel?.querySelector('.logic-gate');
+          if (gate) {
+            gate.animate(
+              [
+                { transform: 'translate(-50%, -50%) scale(1)' },
+                { transform: 'translate(-50%, -50%) scale(1.08)' },
+                { transform: 'translate(-50%, -50%) scale(1)' },
+              ],
+              { duration: 380, easing: 'ease-out' }
+            );
+          }
+        });
+      });
+    }
+
+    if (project.interaction?.type === 'browser-preview' || project.interaction?.type === 'iframe-preview') {
+      scope.querySelectorAll('.browser-window').forEach((win) => {
+        win.addEventListener('pointermove', (event) => {
+          const rect = win.getBoundingClientRect();
+          const mx = ((event.clientX - rect.left) / rect.width - 0.5) * 6;
+          const my = ((event.clientY - rect.top) / rect.height - 0.5) * 6;
+          win.style.transform = `translate(${mx.toFixed(2)}px, ${my.toFixed(2)}px)`;
+        });
+        win.addEventListener('pointerleave', () => {
+          win.style.transform = '';
+        });
+      });
+    }
+  }
+
   function openSpotlight(project) {
     currentSpotlightProject = project;
     selectedProjectName = project.name;
@@ -411,6 +526,7 @@
     spotlightWrap.innerHTML = spotlightMarkup(project);
     document.body.classList.add('modal-open');
     bindSpotlightInteractions(spotlightWrap);
+    initSpotlightEffects(project, spotlightWrap);
 
     const closeButton = spotlightWrap.querySelector('.btn-close-modal');
     closeButton?.addEventListener('click', () => closeSpotlight(true));
@@ -425,6 +541,7 @@
     spotlightWrap.classList.add('hidden');
     spotlightWrap.innerHTML = '';
     spotlightWrap.onclick = null;
+    spotlightWrap.style.transform = '';
     document.body.classList.remove('modal-open');
     if (shouldRerender) renderPage();
   }
@@ -433,12 +550,12 @@
     const stack = (project.stack || []).slice(0, 3).map((item) => `<span class="tag">${item}</span>`).join('');
     const actionLabel =
       project.interaction?.type === 'tifan-machine' ? 'View System' :
-      project.interaction?.type === 'terminal-demo' ? 'Run Demo' :
-      project.interaction?.type === 'pcb-explorer' ? 'Inspect Board' :
-      project.interaction?.type === 'browser-preview' ? 'Open Preview' :
-      project.interaction?.type === 'logic-sim' ? 'Test Logic' :
-      project.interaction?.type === 'iframe-preview' ? 'Live Demo' :
-      'Explore Project';
+        project.interaction?.type === 'terminal-demo' ? 'Run Demo' :
+          project.interaction?.type === 'pcb-explorer' ? 'Inspect Board' :
+            project.interaction?.type === 'browser-preview' ? 'Open Preview' :
+              project.interaction?.type === 'logic-sim' ? 'Test Logic' :
+                project.interaction?.type === 'iframe-preview' ? 'Live Demo' :
+                  'Explore Project';
     const stats = repoStats[project.name];
     const statsMarkup = stats
       ? `<span class="teaser-stats">Star ${stats.stars} | Updated ${stats.updated}</span>`
@@ -536,6 +653,7 @@
     renderFeatured(featured);
     renderSections(filtered);
     attachProjectOpenHandlers();
+    initTeaserTilt();
   }
 
   async function fetchGitHubStats() {
