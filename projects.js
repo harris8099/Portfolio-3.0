@@ -7,7 +7,7 @@
   const searchInput = document.getElementById('searchInput');
   const emptyState = document.getElementById('emptyState');
 
-  let activeDomain = 'All';
+  let activeDomain = null;
   let query = '';
   let selectedProjectName = null;
   let currentSpotlightProject = null;
@@ -22,7 +22,8 @@
     'Digital Design',
     'Python Games',
   ];
-  const domains = ['All', ...new Set(projects.map((p) => p.domain))];
+  const domains = [...new Set(projects.map((p) => p.domain))];
+  activeDomain = activeDomain || domains[0]; // Default to first domain
 
   function createFilters() {
     filtersWrap.innerHTML = '';
@@ -44,7 +45,7 @@
 
   function getFilteredProjects() {
     return projects.filter((project) => {
-      const domainOk = activeDomain === 'All' || project.domain === activeDomain;
+      const domainOk = !activeDomain || project.domain === activeDomain;
       const q = query.trim().toLowerCase();
       if (!q) return domainOk;
       const hay = [project.name, project.summary, project.domain, ...(project.stack || []), ...(project.highlights || [])]
@@ -526,23 +527,16 @@
   }
 
   function projectCard(project) {
-    const actionLabel =
-      project.interaction?.type === 'tifan-machine' ? 'View' :
-      project.interaction?.type === 'terminal-demo' ? 'Demo' :
-      project.interaction?.type === 'pcb-explorer' ? 'Inspect' :
-      project.interaction?.type === 'browser-preview' ? 'Preview' :
-      project.interaction?.type === 'logic-sim' ? 'Test' :
-      project.interaction?.type === 'iframe-preview' ? 'Demo' :
-      'View';
-
     return `
-      <article class="project-compact${project.name === selectedProjectName ? ' selected' : ''}" data-project-card="${project.name}" data-project-open="${project.name}" tabindex="0" role="button" aria-label="Open ${project.name}">
-        <span class="project-domain-badge">${project.domain}</span>
-        <h3>${project.name}</h3>
-        <span class="project-summary">${project.summary.slice(0, 60)}${project.summary.length > 60 ? '...' : ''}</span>
-        <div class="project-mini-tags">${(project.stack || []).slice(0, 3).map((item) => `<span class="tag-mini">${item}</span>`).join('')}</div>
-        <button type="button" class="project-btn-sm">${actionLabel}</button>
-        <a href="${project.github}" target="_blank" rel="noreferrer" class="project-link-sm">GitHub</a>
+      <article class="project-mini${project.name === selectedProjectName ? ' selected' : ''}" data-project-card="${project.name}" data-project-open="${project.name}" tabindex="0" role="button" aria-label="Open ${project.name}">
+        <div class="mini-top">
+          <h4>${project.name}</h4>
+          <div class="mini-actions">
+            <button type="button" class="mini-btn" title="View project">→</button>
+            <a href="${project.github}" target="_blank" rel="noreferrer" class="mini-gh" title="GitHub">⎇</a>
+          </div>
+        </div>
+        <div class="mini-tags">${(project.stack || []).slice(0, 2).map((item) => `<span>${item}</span>`).join('')}</div>
       </article>
     `;
   }
