@@ -1813,6 +1813,193 @@
       text-align: center;
     }
 
+    /* Compact Featured Section */
+    .featured-compact {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+    }
+
+    .featured-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .featured-badge {
+      background: var(--cyan);
+      color: var(--bg);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .featured-row h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      color: var(--white);
+      margin: 0;
+    }
+
+    .featured-summary {
+      color: var(--dim);
+      font-size: 12px;
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .featured-mini-tags {
+      display: flex;
+      gap: 4px;
+    }
+
+    .tag-mini {
+      font-size: 9px;
+      color: var(--dim);
+      background: var(--bg3);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .feature-btn-sm {
+      background: var(--cyan);
+      color: var(--bg);
+      border: none;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 4px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .github-link-sm {
+      color: var(--dim);
+      font-size: 11px;
+      text-decoration: none;
+    }
+
+    .github-link-sm:hover {
+      color: var(--cyan);
+    }
+
+    /* Compact Project Cards */
+    .project-compact {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .project-compact:hover {
+      border-color: var(--cyan);
+      background: var(--bg3);
+    }
+
+    .project-compact.selected {
+      border-color: var(--cyan);
+      background: var(--cyan2);
+    }
+
+    .project-domain-badge {
+      background: var(--border);
+      color: var(--dim);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .project-compact h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      color: var(--white);
+      margin: 0;
+    }
+
+    .project-summary {
+      color: var(--dim);
+      font-size: 11px;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .project-mini-tags {
+      display: flex;
+      gap: 4px;
+    }
+
+    .project-btn-sm {
+      background: var(--cyan);
+      color: var(--bg);
+      border: none;
+      padding: 5px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 4px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      pointer-events: none;
+    }
+
+    .project-link-sm {
+      color: var(--dim);
+      font-size: 10px;
+      text-decoration: none;
+    }
+
+    .project-link-sm:hover {
+      color: var(--cyan);
+    }
+
+    /* Update teaser grid to single column */
+    .teaser-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Compact machine tabs */
+    .compact-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .compact-tabs .machine-tab {
+      padding: 6px 12px;
+      font-size: 10px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--dim);
+      cursor: pointer;
+    }
+
+    .compact-tabs .machine-tab.active {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: var(--cyan2);
+    }
+
     .filter-chip {
       padding: 6px 14px;
       background: var(--bg2);

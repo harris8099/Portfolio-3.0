@@ -136,27 +136,8 @@
             `).join('')}
           </div>
         </div>
-        <div class="machine-tabs">
-          ${steps.map((step, index) => `<button type="button" class="machine-tab${index === 0 ? ' active' : ''}" data-step="${step.key}">${step.label}</button>`).join('')}
-        </div>
-        <div class="machine-panels">
-          ${steps.map((step, index) => `
-            <div class="machine-panel${index === 0 ? ' active' : ''}" data-panel="${step.key}">
-              <div class="machine-board">
-                <div class="machine-stage">${step.stage}</div>
-                <div class="machine-diagram">
-                  <div class="machine-node node-hand${step.key === 'grip' ? ' live' : ''}">Hand</div>
-                  <div class="machine-node node-feed${step.key === 'overview' ? ' live' : ''}">Feed</div>
-                  <div class="machine-node node-path${step.key === 'plant' ? ' live' : ''}">Plant Path</div>
-                  <div class="machine-node node-reset${step.key === 'reset' ? ' live' : ''}">Reset</div>
-                </div>
-                <div class="machine-copy">${step.text}</div>
-              </div>
-              <div class="machine-parts">
-                ${(step.parts || []).map((part) => `<span class="machine-chip">${part}</span>`).join('')}
-              </div>
-            </div>
-          `).join('')}
+        <div class="machine-tabs compact-tabs">
+          ${steps.map((step, index) => `<button type="button" class="machine-tab${index === 0 ? ' active' : ''}" data-step="${step.key}" title="${step.text}">${step.label}</button>`).join('')}
         </div>
       </section>
     `;
@@ -367,9 +348,7 @@
 
     scope.querySelectorAll('.machine-tab').forEach((tab) => {
       tab.addEventListener('click', () => {
-        const target = tab.dataset.step;
         scope.querySelectorAll('.machine-tab').forEach((button) => button.classList.toggle('active', button === tab));
-        scope.querySelectorAll('.machine-panel').forEach((panel) => panel.classList.toggle('active', panel.dataset.panel === target));
       });
     });
 
@@ -548,25 +527,22 @@
 
   function projectCard(project) {
     const actionLabel =
-      project.interaction?.type === 'tifan-machine' ? 'View system' :
-      project.interaction?.type === 'terminal-demo' ? 'Run demo' :
-      project.interaction?.type === 'pcb-explorer' ? 'Inspect board' :
-      project.interaction?.type === 'browser-preview' ? 'Open preview' :
-      project.interaction?.type === 'logic-sim' ? 'Test logic' :
-      project.interaction?.type === 'iframe-preview' ? 'Live demo' :
-      'Explore project';
+      project.interaction?.type === 'tifan-machine' ? 'View' :
+      project.interaction?.type === 'terminal-demo' ? 'Demo' :
+      project.interaction?.type === 'pcb-explorer' ? 'Inspect' :
+      project.interaction?.type === 'browser-preview' ? 'Preview' :
+      project.interaction?.type === 'logic-sim' ? 'Test' :
+      project.interaction?.type === 'iframe-preview' ? 'Demo' :
+      'View';
 
     return `
-      <article class="project-teaser${project.name === selectedProjectName ? ' selected' : ''}" data-project-card="${project.name}" data-project-open="${project.name}" tabindex="0" role="button" aria-label="Open ${project.name}">
-        <div class="teaser-visual">${getProjectVisual(project)}</div>
-        <div class="teaser-body">
-          <div class="teaser-meta"><span>${project.domain}</span><span>${project.year}</span></div>
-          <h3>${project.name}</h3>
-          <p>${project.summary}</p>
-          <div class="teaser-footer">
-            <span class="teaser-cta" aria-hidden="true">${actionLabel} &rarr;</span>
-          </div>
-        </div>
+      <article class="project-compact${project.name === selectedProjectName ? ' selected' : ''}" data-project-card="${project.name}" data-project-open="${project.name}" tabindex="0" role="button" aria-label="Open ${project.name}">
+        <span class="project-domain-badge">${project.domain}</span>
+        <h3>${project.name}</h3>
+        <span class="project-summary">${project.summary.slice(0, 60)}${project.summary.length > 60 ? '...' : ''}</span>
+        <div class="project-mini-tags">${(project.stack || []).slice(0, 3).map((item) => `<span class="tag-mini">${item}</span>`).join('')}</div>
+        <button type="button" class="project-btn-sm">${actionLabel}</button>
+        <a href="${project.github}" target="_blank" rel="noreferrer" class="project-link-sm">GitHub</a>
       </article>
     `;
   }
@@ -577,18 +553,15 @@
       return;
     }
     featuredWrap.innerHTML = `
-      <div class="featured-shell">
-        <div class="featured-copy">
-          <p class="section-kicker">Featured Project</p>
-          <h2>${project.name}</h2>
-          <p>${project.summary}</p>
-          <div class="tags featured-tags">${(project.stack || []).map((item) => `<span class="tag">${item}</span>`).join('')}</div>
-          <div class="featured-actions">
-            <button type="button" class="feature-btn" data-project-open="${project.name}">Open Interactive Viewer</button>
-            <a href="${project.github}" target="_blank" rel="noreferrer">GitHub</a>
-          </div>
+      <div class="featured-compact">
+        <div class="featured-row">
+          <span class="featured-badge">Featured</span>
+          <h3>${project.name}</h3>
+          <span class="featured-summary">${project.summary.slice(0, 80)}${project.summary.length > 80 ? '...' : ''}</span>
+          <div class="featured-mini-tags">${(project.stack || []).slice(0, 3).map((item) => `<span class="tag-mini">${item}</span>`).join('')}</div>
+          <button type="button" class="feature-btn-sm" data-project-open="${project.name}">View</button>
+          <a href="${project.github}" target="_blank" rel="noreferrer" class="github-link-sm">GitHub</a>
         </div>
-        <div class="featured-visual">${getProjectVisual(project)}</div>
       </div>
     `;
   }
