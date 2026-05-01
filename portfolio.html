@@ -85,7 +85,6 @@
       font-family: 'JetBrains Mono', monospace;
   display: flex;
   flex-direction: column;
-  padding-left: 140px;
 }
 
     /* noise */
@@ -165,63 +164,79 @@
       outline-offset: 2px;
     }
 
+    /* Dot-style left navigation rail */
     .left-rail {
       position: fixed;
-      left: 30px;
+      left: 20px;
       top: 50%;
       transform: translateY(-50%);
-      z-index: 80;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
+      z-index: 25;
       opacity: 1;
       transition: opacity .3s ease, transform .3s ease;
+      padding: 12px 8px;
+      background: rgba(10, 11, 13, 0.6);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .left-rail.rail-hidden {
       opacity: 0;
-      transform: translate(-10px, -50%);
+      transform: translate(-20px, -50%);
       pointer-events: none;
     }
 
     .rail-item {
       position: relative;
-      padding: 2px 0 2px 18px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--dim);
+      opacity: 0.4;
+      transition: all .25s cubic-bezier(.22, 1, .36, 1);
+      cursor: pointer;
       text-decoration: none;
-      color: var(--text);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      letter-spacing: .01em;
-      line-height: 1.45;
-      opacity: .82;
-      transition: color .2s ease, opacity .2s ease;
     }
 
     .rail-item:hover {
-      color: var(--cyan);
-      opacity: 1;
-    }
-
-    .rail-item::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--cyan);
-      transform: translateY(-50%) scale(0);
-      transition: transform .25s cubic-bezier(.22, 1, .36, 1);
+      opacity: 0.8;
+      transform: scale(1.3);
     }
 
     .rail-item.active {
-      color: var(--cyan);
+      background: var(--cyan);
       opacity: 1;
+      transform: scale(1.5);
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
     }
 
-    .rail-item.active::before {
-      transform: translateY(-50%) scale(1);
+    /* Tooltip on hover */
+    .rail-item::after {
+      content: attr(data-section-link);
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 4px 10px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 10px;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .rail-item:hover::after {
+      opacity: 1;
+      transform: translateY(-50%) translateX(4px);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -2058,9 +2073,10 @@
 
 <body>
   <aside class="left-rail rail-hidden" aria-label="Section navigation">
-    <a href="#about" class="rail-item" data-section-link="about">About</a>
-    <a href="#projects" class="rail-item" data-section-link="projects">Projects</a>
-    <a href="#contact" class="rail-item" data-section-link="contact">Contact</a>
+    <a href="#top" class="rail-item" data-section-link="top" title="Home"></a>
+    <a href="#about" class="rail-item" data-section-link="about" title="About"></a>
+    <a href="#projects" class="rail-item" data-section-link="projects" title="Projects"></a>
+    <a href="#contact" class="rail-item" data-section-link="contact" title="Contact"></a>
   </aside>
 
   <!-- NAV -->
