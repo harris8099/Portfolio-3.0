@@ -547,34 +547,24 @@
   }
 
   function projectCard(project) {
-    const stack = (project.stack || []).slice(0, 3).map((item) => `<span class="tag">${item}</span>`).join('');
     const actionLabel =
-      project.interaction?.type === 'tifan-machine' ? 'View System' :
-        project.interaction?.type === 'terminal-demo' ? 'Run Demo' :
-          project.interaction?.type === 'pcb-explorer' ? 'Inspect Board' :
-            project.interaction?.type === 'browser-preview' ? 'Open Preview' :
-              project.interaction?.type === 'logic-sim' ? 'Test Logic' :
-                project.interaction?.type === 'iframe-preview' ? 'Live Demo' :
-                  'Explore Project';
-    const stats = repoStats[project.name];
-    const statsMarkup = stats
-      ? `<span class="teaser-stats">Star ${stats.stars} | Updated ${stats.updated}</span>`
-      : '';
+      project.interaction?.type === 'tifan-machine' ? 'View system' :
+      project.interaction?.type === 'terminal-demo' ? 'Run demo' :
+      project.interaction?.type === 'pcb-explorer' ? 'Inspect board' :
+      project.interaction?.type === 'browser-preview' ? 'Open preview' :
+      project.interaction?.type === 'logic-sim' ? 'Test logic' :
+      project.interaction?.type === 'iframe-preview' ? 'Live demo' :
+      'Explore project';
 
     return `
-      <article class="project-teaser${project.name === selectedProjectName ? ' selected' : ''}" data-project-card="${project.name}">
+      <article class="project-teaser${project.name === selectedProjectName ? ' selected' : ''}" data-project-card="${project.name}" data-project-open="${project.name}" tabindex="0" role="button" aria-label="Open ${project.name}">
         <div class="teaser-visual">${getProjectVisual(project)}</div>
         <div class="teaser-body">
-          <div class="teaser-meta">
-            <span>${project.domain} | ${project.year}</span>
-            ${statsMarkup}
-          </div>
+          <div class="teaser-meta"><span>${project.domain}</span><span>${project.year}</span></div>
           <h3>${project.name}</h3>
           <p>${project.summary}</p>
-          <div class="tags teaser-tags">${stack}</div>
           <div class="teaser-footer">
-            <span class="teaser-hook">${teaserLabel(project)}</span>
-            <button type="button" class="teaser-btn" data-project-open="${project.name}">${actionLabel}</button>
+            <span class="teaser-cta" aria-hidden="true">${actionLabel} &rarr;</span>
           </div>
         </div>
       </article>
@@ -636,14 +626,23 @@
   }
 
   function attachProjectOpenHandlers() {
-    document.querySelectorAll('[data-project-open]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const project = projects.find((item) => item.name === button.dataset.projectOpen);
+    document.querySelectorAll('[data-project-open]').forEach((trigger) => {
+      const open = () => {
+        const project = projects.find((item) => item.name === trigger.dataset.projectOpen);
         if (!project) return;
         selectedProjectName = project.name;
         renderPage();
         openSpotlight(project);
-      });
+      };
+      trigger.addEventListener('click', open);
+      if (trigger.getAttribute('role') === 'button') {
+        trigger.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            open();
+          }
+        });
+      }
     });
   }
 

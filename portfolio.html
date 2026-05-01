@@ -83,10 +83,10 @@
       background: var(--bg);
       color: var(--text);
       font-family: 'JetBrains Mono', monospace;
-      display: flex;
-      flex-direction: column;
-      padding-left: 84px;
-    }
+  display: flex;
+  flex-direction: column;
+  padding-left: 140px;
+}
 
     /* noise */
     body::before {
@@ -123,17 +123,35 @@
     }
 
     .theme-toggle {
-      font-size: 10px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      padding: 6px 12px;
+      width: 32px;
+      height: 32px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0;
       border: 1px solid var(--border2);
-      color: var(--dim);
+      color: var(--text);
       background: none;
       cursor: pointer;
-      border-radius: 2px;
+      border-radius: 999px;
       transition: all .2s;
-      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .theme-toggle svg {
+      width: 16px;
+      height: 16px;
+      display: none;
+    }
+
+    .theme-toggle .icon-sun {
+      display: block;
+    }
+
+    [data-theme="light"] .theme-toggle .icon-sun {
+      display: none;
+    }
+
+    [data-theme="light"] .theme-toggle .icon-moon {
+      display: block;
     }
 
     .theme-toggle:hover {
@@ -149,37 +167,61 @@
 
     .left-rail {
       position: fixed;
-      left: 16px;
+      left: 30px;
       top: 50%;
       transform: translateY(-50%);
       z-index: 80;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 14px;
+      opacity: 1;
+      transition: opacity .3s ease, transform .3s ease;
+    }
+
+    .left-rail.rail-hidden {
+      opacity: 0;
+      transform: translate(-10px, -50%);
+      pointer-events: none;
     }
 
     .rail-item {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 68px;
-      padding: 10px 12px;
-      border: 1px solid var(--border2);
+      position: relative;
+      padding: 2px 0 2px 18px;
       text-decoration: none;
-      color: var(--dim);
-      background: rgba(10, 11, 13, .86);
-      font-size: 9px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      backdrop-filter: blur(8px);
-      transition: all .2s;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      letter-spacing: .01em;
+      line-height: 1.45;
+      opacity: .82;
+      transition: color .2s ease, opacity .2s ease;
     }
 
-    .rail-item:hover,
-    .rail-item.active {
-      border-color: var(--cyan);
+    .rail-item:hover {
       color: var(--cyan);
-      background: var(--cyan2);
+      opacity: 1;
+    }
+
+    .rail-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      transform: translateY(-50%) scale(0);
+      transition: transform .25s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .rail-item.active {
+      color: var(--cyan);
+      opacity: 1;
+    }
+
+    .rail-item.active::before {
+      transform: translateY(-50%) scale(1);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1053,20 +1095,7 @@
       }
 
       .left-rail {
-        left: 12px;
-        right: 12px;
-        top: auto;
-        bottom: 12px;
-        transform: none;
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 6px;
-      }
-
-      .rail-item {
-        flex: 1;
-        min-width: 0;
-        padding: 10px 6px;
+        display: none;
       }
 
       .about-grid,
@@ -1728,10 +1757,10 @@
     }
 
     .projects-controls {
-      margin-bottom: 22px;
-      padding: 18px;
-      border: 1px solid var(--border);
-      background: rgba(15, 17, 20, .9);
+      margin: 0 0 32px;
+      padding: 0;
+      border: none;
+      background: none;
       display: grid;
       gap: 14px;
     }
@@ -1739,20 +1768,20 @@
     .projects-controls input {
       width: 100%;
       max-width: none;
-      padding: 12px 14px;
-      background: #090c10;
-      border: 1px solid var(--border2);
+      padding: 12px 0;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border2);
       border-radius: 0;
       color: #fff;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
+      font-size: 14px;
       margin-bottom: 0;
     }
 
     .projects-controls input:focus {
       outline: none;
-      border-color: var(--cyan);
-      box-shadow: 0 0 0 1px rgba(0, 229, 255, .15);
+      border-bottom-color: var(--cyan);
     }
 
     .filters {
@@ -2028,8 +2057,7 @@
 </head>
 
 <body>
-  <aside class="left-rail" aria-label="Section navigation">
-    <a href="#top" class="rail-item" data-section-link="top">Home</a>
+  <aside class="left-rail rail-hidden" aria-label="Section navigation">
     <a href="#about" class="rail-item" data-section-link="about">About</a>
     <a href="#projects" class="rail-item" data-section-link="projects">Projects</a>
     <a href="#contact" class="rail-item" data-section-link="contact">Contact</a>
@@ -2045,7 +2073,10 @@
       <a href="#contact" data-section-link="contact">Contact</a>
     </div>
     <div class="nav-actions">
-      <button class="theme-toggle" type="button" aria-label="Toggle theme">Theme</button>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
       <button class="nav-dl">Export Profile</button>
     </div>
   </nav>
@@ -2577,6 +2608,19 @@
     window.addEventListener('scroll', updateActiveNav, { passive: true });
     updateActiveNav();
 
+    (function initRailReveal() {
+      const rail = document.querySelector('.left-rail');
+      const stage = document.getElementById('stage');
+      if (!rail || !stage || !('IntersectionObserver' in window)) return;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const heroVisible = entry.isIntersecting && entry.intersectionRatio > 0.25;
+          rail.classList.toggle('rail-hidden', heroVisible);
+        });
+      }, { threshold: [0, 0.25, 0.5, 1] });
+      observer.observe(stage);
+    })();
+
     (function initTheme() {
       const root = document.documentElement;
       const saved = localStorage.getItem('site-theme');
@@ -2584,12 +2628,10 @@
       const initial = saved || (prefersLight ? 'light' : 'dark');
       root.setAttribute('data-theme', initial);
       if (themeToggleBtn) {
-        themeToggleBtn.textContent = initial === 'light' ? 'Dark' : 'Light';
         themeToggleBtn.addEventListener('click', () => {
           const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
           root.setAttribute('data-theme', next);
           localStorage.setItem('site-theme', next);
-          themeToggleBtn.textContent = next === 'light' ? 'Dark' : 'Light';
         });
       }
     })();
