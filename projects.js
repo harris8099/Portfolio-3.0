@@ -294,7 +294,6 @@
         </div>
         <div class="project-media project-media-iframe">
           <div class="media-stage media-stage-iframe">
-            <div class="browser-chrome browser-chrome-static"><span></span><span></span><span></span></div>
             <iframe src="${project.interaction.url}" title="${project.name}" loading="lazy"></iframe>
           </div>
         </div>

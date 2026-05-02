@@ -156,16 +156,20 @@ window.GITHUB_REPOS = [
         media: {
           images: [
             {
-              src: "assets/kicad-projects/workflow.jpg",
+              src: "assets/kicad-projects/Screenshot 2025-12-27 174512.png",
               alt: "PCB layout workflow",
             },
             {
-              src: "assets/kicad-projects/schematic.jpg",
+              src: "assets/kicad-projects/Screenshot 2026-01-05 204807.png",
               alt: "Schematic design workflow",
             },
             {
               src: "assets/kicad-projects/esp32-board.png",
               alt: "ESP32 based dev board layout",
+            },
+            {
+              src: "assets/kicad-projects/Mini drone.png",
+              alt: "Mini drone PCB",
             },
           ],
         },
@@ -438,13 +442,6 @@ window.GITHUB_REPOS = [
           ["Goal", "Add custom watermarks"],
         ],
         screens: [
-          {
-            key: "upload",
-            label: "Upload",
-            title: "Image Upload Stage",
-            text: "The app begins with a simple upload-first flow so the watermark process starts from the user's chosen image.",
-            image: "assets/watermark/upload.png",
-          },
           {
             key: "mark",
             label: "Watermark",
