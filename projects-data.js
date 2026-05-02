@@ -104,15 +104,23 @@ window.GITHUB_REPOS = [
     html_url: "https://github.com/harris8099/Tic-Tac-Toe-command-line",
     updated_at: "2024-04-25T13:42:45Z",
   },
+  {
+    name: "Mist_maker",
+    language: "C++",
+    description: "ESP32-based mist/fog generation system with sensor control",
+    html_url: "https://github.com/harris8099/Mist_maker",
+    updated_at: "2024-11-20T12:00:00Z",
+  },
 ];
 
 (function () {
   const complexityRank = {
+    Tifan: 92,
+    "Mist_maker": 90,
     "Motor-Website": 88,
     "Kicad-projects": 84,
     WiLink: 80,
     "Portfolio-2.0": 76,
-    Tifan: 92,
     "CTAE-MAP": 72,
     "Type-Master": 69,
     "Text-to-Morse-converter-": 65,
@@ -333,6 +341,75 @@ window.GITHUB_REPOS = [
               src: "assets/tifan/demo_video.mp4",
               type: "video",
               label: "Sapling Planting Demo",
+            },
+          ],
+        },
+      },
+    },
+    "Mist_maker": {
+      domain: "Embedded & Hardware",
+      stack: ["ESP32", "C++", "Sensor Control", "IoT", "Hardware Design"],
+      summary: "ESP32-based mist generation system with automated sensor control for precise humidity and cooling applications.",
+      highlights: [
+        "Built an automated mist/fog generation system using ESP32 microcontroller.",
+        "Integrated sensors for real-time environmental monitoring and control.",
+        "Designed for humidity control and cooling applications with IoT connectivity.",
+      ],
+      interaction: {
+        type: "tifan-machine",
+        title: "Mist Generation System",
+        subtitle: "Interactive view of the ESP32-based mist maker with sensor control.",
+        steps: [
+          {
+            key: "overview",
+            label: "Overview",
+            stage: "System Layout",
+            text: "The mist maker combines ESP32 control, ultrasonic transducers, and environmental sensors to generate precise mist output.",
+            parts: ["ESP32 Controller", "Ultrasonic Module", "Sensor Array", "Power Supply"],
+          },
+          {
+            key: "sensors",
+            label: "Sensors",
+            stage: "Data Acquisition",
+            text: "Environmental sensors monitor humidity, temperature, and water level to automate mist generation cycles.",
+            parts: ["Humidity Sensor", "Temperature Probe", "Water Level Switch"],
+          },
+          {
+            key: "control",
+            label: "Control",
+            stage: "Processing Unit",
+            text: "ESP32 processes sensor data and adjusts mist intensity, duration, and intervals for optimal performance.",
+            parts: ["Microcontroller", "PWM Driver", "WiFi Module"],
+          },
+          {
+            key: "output",
+            label: "Output",
+            stage: "Mist Generation",
+            text: "Ultrasonic transducers create fine mist particles while the enclosure directs flow toward the target area.",
+            parts: ["Transducer Array", "Flow Director", "Reservoir"],
+          },
+        ],
+        metrics: [
+          ["Controller", "ESP32"],
+          ["Language", "C++ / Arduino"],
+          ["Features", "Sensor automation, IoT"],
+        ],
+        media: {
+          images: [
+            {
+              src: "assets/mist-maker/photo-1.jpg",
+              alt: "Mist maker hardware assembly",
+            },
+            {
+              src: "assets/mist-maker/photo-2.png",
+              alt: "Mist maker in operation",
+            },
+          ],
+          videos: [
+            {
+              src: "assets/mist-maker/demo.mp4",
+              type: "video",
+              label: "Mist Generation Demo",
             },
           ],
         },
