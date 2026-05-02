@@ -28,6 +28,152 @@
   --surface: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 246, 253, 0.96));
 }
 
+/* Light theme styles for project elements */
+[data-theme="light"] .teaser-terminal {
+  background:
+    radial-gradient(circle at center, rgba(10, 132, 255, 0.08), transparent 36%),
+    linear-gradient(180deg, rgba(248, 250, 252, 0.98), rgba(241, 245, 249, 0.98));
+}
+
+[data-theme="light"] .teaser-board,
+[data-theme="light"] .teaser-generic,
+[data-theme="light"] .teaser-logic {
+  background:
+    linear-gradient(rgba(10, 132, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 132, 255, 0.08) 1px, transparent 1px),
+    #e6f0ff;
+  background-size: 28px 28px, 28px 28px, auto;
+}
+
+[data-theme="light"] .card {
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.96), rgba(255, 255, 255, 0.98));
+}
+
+[data-theme="light"] .card:hover {
+  background: linear-gradient(180deg, rgba(241, 245, 249, 0.96), rgba(248, 250, 252, 0.98));
+}
+
+[data-theme="light"] .tag {
+  background: #ffffff;
+}
+
+[data-theme="light"] .actions a,
+[data-theme="light"] .actions button,
+[data-theme="light"] .featured-actions a,
+[data-theme="light"] .spotlight-actions a,
+[data-theme="light"] .feature-btn,
+[data-theme="light"] .teaser-btn {
+  background: #ffffff;
+}
+
+[data-theme="light"] .project-machine {
+  background: rgba(248, 250, 252, 0.82);
+}
+
+[data-theme="light"] .media-stage {
+  background: #f1f5f9;
+}
+
+[data-theme="light"] .media-thumb {
+  background: #ffffff;
+}
+
+[data-theme="light"] .media-video-card {
+  background: rgba(248, 250, 252, 0.88);
+}
+
+[data-theme="light"] .machine-tab,
+[data-theme="light"] .terminal-tab,
+[data-theme="light"] .pcb-tab,
+[data-theme="light"] .browser-tab,
+[data-theme="light"] .logic-tab {
+  background: #ffffff;
+}
+
+[data-theme="light"] .machine-board {
+  background:
+    linear-gradient(180deg, rgba(248, 250, 252, 0.96), rgba(241, 245, 249, 0.95));
+}
+
+[data-theme="light"] .machine-diagram {
+  background:
+    radial-gradient(circle at center, rgba(10, 132, 255, 0.08), transparent 36%),
+    linear-gradient(rgba(10, 132, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 132, 255, 0.08) 1px, transparent 1px),
+    #e6f0ff;
+  background-size: auto, 32px 32px, 32px 32px, auto;
+}
+
+[data-theme="light"] .machine-node {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+[data-theme="light"] .machine-chip {
+  background: #ffffff;
+}
+
+[data-theme="light"] .terminal-body {
+  background: rgba(248, 250, 252, 0.65);
+}
+
+[data-theme="light"] .terminal-panel {
+  background: #f8fafc;
+}
+
+[data-theme="light"] .pcb-canvas {
+  background:
+    radial-gradient(circle at center, rgba(10, 132, 255, 0.06), transparent 42%),
+    linear-gradient(rgba(10, 132, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 132, 255, 0.07) 1px, transparent 1px),
+    #e6f0ff;
+  background-size: auto, 28px 28px, 28px 28px, auto;
+}
+
+[data-theme="light"] .pcb-block {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+[data-theme="light"] .pcb-copy {
+  background: rgba(248, 250, 252, 0.6);
+}
+
+[data-theme="light"] .browser-window {
+  background: #f8fafc;
+}
+
+[data-theme="light"] .browser-chrome {
+  background: rgba(241, 245, 249, 0.96);
+}
+
+[data-theme="light"] .browser-copy {
+  background: rgba(248, 250, 252, 0.6);
+}
+
+[data-theme="light"] .logic-display {
+  background:
+    radial-gradient(circle at center, rgba(10, 132, 255, 0.08), transparent 38%),
+    linear-gradient(rgba(10, 132, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 132, 255, 0.07) 1px, transparent 1px),
+    #e6f0ff;
+  background-size: auto, 28px 28px, 28px 28px, auto;
+}
+
+[data-theme="light"] .logic-node {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+[data-theme="light"] .empty {
+  background: rgba(248, 250, 252, 0.94);
+}
+
+[data-theme="light"] .project-spotlight .spotlight-content {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.98));
+}
+
+[data-theme="light"] .btn-close-modal {
+  background: #ffffff;
+}
+
 *,
 *::before,
 *::after {
