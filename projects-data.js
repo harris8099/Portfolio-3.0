@@ -157,11 +157,19 @@ window.GITHUB_REPOS = [
           images: [
             {
               src: "assets/kicad-projects/Screenshot 2025-12-27 174512.png",
-              alt: "PCB layout workflow",
+              alt: "PCB layout workflow - drone board routing",
             },
             {
               src: "assets/kicad-projects/Screenshot 2026-01-05 204807.png",
-              alt: "Schematic design workflow",
+              alt: "PCB 3D render - component placement view",
+            },
+            {
+              src: "assets/kicad-projects/Screenshot 2026-01-05 204822.png",
+              alt: "PCB copper layer - trace routing detail",
+            },
+            {
+              src: "assets/kicad-projects/Screenshot 2026-01-05 204839.png",
+              alt: "PCB silkscreen - component labels",
             },
             {
               src: "assets/kicad-projects/esp32-board.png",
@@ -169,7 +177,7 @@ window.GITHUB_REPOS = [
             },
             {
               src: "assets/kicad-projects/Mini drone.png",
-              alt: "Mini drone PCB",
+              alt: "Mini drone PCB - flight controller",
             },
           ],
         },
@@ -443,18 +451,18 @@ window.GITHUB_REPOS = [
         ],
         screens: [
           {
-            key: "mark",
-            label: "Watermark",
-            title: "Watermark Layer",
-            text: "The watermark step focuses on placing a visible mark while keeping the tool straightforward for repeated use.",
-            image: "assets/watermark/water-mark.png",
-          },
-          {
             key: "demo",
             label: "Demo",
             title: "Workflow Demo",
             text: "The demo preview captures the overall flow of using the watermark tool from action to result.",
             image: "assets/watermark/demo.gif",
+          },
+          {
+            key: "mark",
+            label: "Preview",
+            title: "Final Watermark",
+            text: "The watermark step focuses on placing a visible mark while keeping the tool straightforward for repeated use.",
+            image: "assets/watermark/water-mark.png",
           },
         ],
       },
