@@ -5,6 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Harshil Suthar - Portfolio</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0b0d'/%3E%3Ctext x='50' y='68' font-family='Arial' font-size='55' font-weight='bold' text-anchor='middle' fill='%2300e5ff'%3EHS%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -159,9 +160,25 @@
       background: transparent;
     }
 
+    /* Default (dark) scrollbar styles */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border2);
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
     html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--border2) transparent;
       scroll-behavior: smooth;
     }
+
+    /* Utility class */
+    .hidden { display: none !important; }
 
     body {
       min-height: 100vh;
@@ -404,6 +421,57 @@
     }
 
     .nav-dl:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    /* Light theme nav styles */
+    [data-theme="light"] nav {
+      background: rgba(243, 247, 252, 0.92);
+      border-bottom-color: var(--border);
+    }
+
+    [data-theme="light"] .theme-toggle {
+      border-color: var(--border2);
+      color: var(--dim);
+    }
+
+    [data-theme="light"] .theme-toggle:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    [data-theme="light"] .left-rail {
+      background: rgba(255, 255, 255, 0.7);
+      border-color: var(--border);
+    }
+
+    [data-theme="light"] .rail-item {
+      background: var(--border2);
+      opacity: 0.6;
+    }
+
+    [data-theme="light"] .rail-item.active {
+      background: var(--cyan);
+      box-shadow: 0 0 10px rgba(10, 132, 255, 0.4);
+    }
+
+    [data-theme="light"] .rail-item:hover {
+      opacity: 1;
+    }
+
+    [data-theme="light"] .rail-item::after {
+      background: var(--bg2);
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    [data-theme="light"] .nav-dl {
+      border-color: var(--border2);
+      color: var(--dim);
+    }
+
+    [data-theme="light"] .nav-dl:hover {
       border-color: var(--cyan);
       color: var(--cyan);
     }
@@ -1281,7 +1349,7 @@
       }
 
       .theme-toggle {
-        padding: 4px 10px;
+        padding: 0;
         font-size: 9px;
       }
 
