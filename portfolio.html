@@ -132,6 +132,33 @@
         linear-gradient(90deg, rgba(10, 132, 255, .08) 1px, transparent 1px);
     }
 
+    /* Light theme for portfolio.html terminal panel */
+    [data-theme="light"] #terminal-panel {
+      background: #f8fafc;
+    }
+
+    [data-theme="light"] #t-handle {
+      background: #f1f5f9;
+    }
+
+    [data-theme="light"] #t-input {
+      color: var(--text);
+    }
+
+    /* Light theme scrollbar styles */
+    [data-theme="light"] ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    [data-theme="light"] ::-webkit-scrollbar-thumb {
+      background: var(--border2);
+      border-radius: 2px;
+    }
+
+    [data-theme="light"] ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
     html {
       scroll-behavior: smooth;
     }
@@ -455,7 +482,7 @@
       font-size: clamp(24px, 2.8vw, 38px);
       font-weight: 800;
       line-height: 1.16;
-      color: #fff;
+      color: var(--white);
       letter-spacing: -.01em;
       margin-bottom: 12px;
       overflow-wrap: anywhere;
@@ -3104,13 +3131,6 @@
       tPanel.classList.add('open');
       tPanel.style.removeProperty('height');
 
-      // Auto-scroll terminal into view on mobile/tablet
-      if (window.innerWidth <= 900) {
-        setTimeout(() => {
-          tPanel.scrollIntoView({ behavior: 'smooth', block: 'end' });
-        }, 100);
-      }
-
       if (!booted) {
         booted = true;
         tBody.innerHTML = '';
@@ -3150,7 +3170,7 @@
       isMinimized = false;
       if (!isMaximized) {
         savedHeight = tPanel.offsetHeight || Math.floor(rightPanel.offsetHeight * 0.52);
-        const target = Math.max(220, rightPanel.offsetHeight - 28);
+        const target = Math.max(220, Math.min(rightPanel.offsetHeight - 28, Math.floor(rightPanel.offsetHeight * 0.7)));
         tPanel.style.height = `${target}px`;
         isMaximized = true;
         maxBtn.textContent = '[]';
